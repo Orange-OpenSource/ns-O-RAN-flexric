@@ -1,4 +1,4 @@
-# ns3-oran-flexric
+# ns-o-ran-flexric
 
 # Project Introducation
 
@@ -19,23 +19,44 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 ## Main Updates
 
-1. **E2 Setup request**
-	- Edit the RAN Function IDs for KPM and RC ​
-	- Reformat the size of the message to match FlexRIC (62 byte)​
-	- Update the KPM ASN and model to KPM v3 ​
+### The implemetation of the E2APv1.01 includes:
 
-2. **E2 Subscription Response** ​
-	- Add RAN Function NotAdmitted IE to the message​
+ 1. **E2 Setup request**
+ 
+        - Edit the RAN Function IDs for KPM and RC ​
+        - Reformat the size of the message to match FlexRIC (62 byte)​
+        - Update the KPM ASN and model to KPM v3 ​
+ 
+ 2. **E2 Subscription Response** ​
+ 
+        - Add RAN Function NotAdmitted IE to the message​
+        - Update the message to match KPM v3.0​
+        - Fill New RIC indication messages formats (Format 3 )​
+ 
+3. **RIC Control Acknoweldege** ​
 
-3. **RIC Indication** ​
-	- Update the message to match KPM v3.0​
-	- Fill New RIC indication messages formats (Format 3 )​
-
+          -Implemented from scratch
 4. **RIC Control Request** ​
-	- Update the message to match E2SM RC v1.01​
 
-5. **RIC Subscription delete response** ​
-	- Implemented from scratch
+          - Update the message to match E2SM RC v1.01​
+ 
+ 5. **RIC Subscription delete response**
+      
+      
+        - Implemented from scratch
+
+6. **RIC Subscription modification response (In-Prograss)**
+
+        - Implemented from scratch
+7. **RIC Subscription modification confirm (In-Prograss)**
+
+        - Implemented from scratch
+      
+### The implementation of KPM and RC
+
+1. **Update the KPM ASN and model to KPM v3.00**
+
+2. **Update the RC ASN and model to RC v1.02 (In-Prograss)**
 
 ## Requirments
 
