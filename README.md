@@ -82,6 +82,21 @@ The first release for ns3-oran-flexric proejct is working with a mature commit f
 
 ### 2. ns3-oran Installation Instructions
 
+First you need to clone the project 
+
+```
+git clone --recurse-submodules https://github.com/Orange-OpenSource/ns-O-RAN-flexric
+```
+
+**Note**
+
+If you made a clone before and there are new updates so you need to make recursive pull
+
+
+```
+git pull --recurse-submodules https://github.com/Orange-OpenSource/ns-O-RAN-flexric
+```
+
 To set up the environment for ORAN E2 simulator, navigate to the `/e2sim` directory. Create a new directory named build. Then execute the script `build_e2sim.sh` with the argument `3` to enable LOG_LEVEL (DEBUG). This is useful to debug the exchange of the messages between the ns-3 and the RIC, but also there are a different debug levels that can be setup. These levels are summarized in the table below.
 
 ```
@@ -158,7 +173,7 @@ Finally, run an example ns-3 scenario called `Scenario Zero` for testing purpose
 2. Second you must done the building steps for ns3-oran simulator section, to build an 'e2sim' and 'ns-3-mmwave-oran' waf.
 3. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
 3. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc' and then run './xapp_kpm_rc'.
-4. Navigate to '/path/to/oran-e2sim/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-zero.cc'
+4. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-zero.cc'
 ```
 
 And if everything goes as intended we should be able to see in order the following messages as shown in the diagram below, and flowing between the ns-3 and the RIC, or as mentiond sequence diagram represented above:
