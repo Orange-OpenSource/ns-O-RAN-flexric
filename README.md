@@ -184,9 +184,11 @@ And if everything goes as intended we should be able to see in order the followi
 2. E2 Setup Response (E2 Term on RIC to ns-O-RAN)
 3. E2 Subscription Request (xApp to ns-O-RAN through E2 Term on RIC)
 4. E2 Subscription Response (ns-O-RAN to xApp through E2 Term on RIC)
-5. E2SM RIC Indication Message (ns-O-RAN to xApp through E2 Term on RIC)
-6. E2SM Subscription Delete Request (xApp to RIC to ns-O-RAN)
-7. E2SM Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
+5. RIC Indication (ns-O-RAN to xApp through E2 Term on RIC)
+6. RIC Control Request (xApp to RIC to ns-O-RAN)
+7. RIC Control Ack (ns-O-RAN to xApp through E2 Term on RIC)
+8. RIC Subscription Delete Request (xApp to RIC to ns-O-RAN)
+9. RIC Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
 
 ## Contributers
 
