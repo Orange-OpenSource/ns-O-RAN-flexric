@@ -1,6 +1,8 @@
 [submodule "e2sim-kpmv3"]
 	path = e2sim-kpmv3
 	url = https://github.com/MinaYonan123/e2sim-kpmv3.git
+	branch = develop
 [submodule "ns-3-mmwave-oran"]
 	path = ns-3-mmwave-oran
 	url = https://github.com/MinaYonan123/ns-3-mmwave-oran.git
+	branch = release
