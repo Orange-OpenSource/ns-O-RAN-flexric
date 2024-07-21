@@ -1,8 +1,8 @@
 # ns-o-ran-flexric
 
-# Project Introducation
+# Project Introduction
 
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns3-oran simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns3-oran simulator to be a fully compliant with E2AP v1.01 and KPM v3. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. The original project of ns3-oran in 
+Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01 and KPM v3. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. The original project of ns-O-RAN in 
 [OpenRAN-Gym](https://openrangym.com/tutorials/ns-o-ran).
 
 ![alt text](fig/1.png)
@@ -40,7 +40,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
           - Update the message to match E2SM RC v1.01​
  
- 5. **RIC Subscription delete response**
+ 5. **RIC Subscription delete request/response**
       
       
         - Implemented from scratch
@@ -78,9 +78,9 @@ The prepation of enviroment for running testing examples can be done when 'near-
 
 ### 1. FlexRiC Installation Instructions
 
-The first release for ns3-oran-flexric proejct is working with a mature commit for flexric, you **must** follow installtion and deployment instructions, under commit number [d3ff879135d036632d7938c2085dbf4577759225](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/d3ff879135d036632d7938c2085dbf4577759225) before use the simulator.
+The first release for ns-O-RAN-flexric proejct is working with a mature commit for flexric, you **MUST** follow installtion and deployment instructions, under commit number [d3ff8791](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/d3ff879135d036632d7938c2085dbf4577759225) before use the simulator.
 
-### 2. ns3-oran Installation Instructions
+### 2. ns-O-RAN-flexric Installation Instructions
 
 First you need to clone the project 
 
@@ -97,12 +97,12 @@ If you made a clone before and there are new updates so you need to make recursi
 git pull --recurse-submodules https://github.com/Orange-OpenSource/ns-O-RAN-flexric
 ```
 
-To set up the environment for ORAN E2 simulator, navigate to the `/e2sim` directory. Create a new directory named build. Then execute the script `build_e2sim.sh` with the argument `3` to enable LOG_LEVEL (DEBUG). This is useful to debug the exchange of the messages between the ns-3 and the RIC, but also there are a different debug levels that can be setup. These levels are summarized in the table below.
+To set up the environment for ORAN E2 simulator, navigate to the `/e2sim-kpmv3/e2sim` directory. Create a new directory named build. Then execute the script `build_e2sim.sh` with the argument `3` to enable LOG_LEVEL (DEBUG). This is useful to debug the exchange of the messages between the ns-3 and the RIC, but also there are a different debug levels that can be setup. These levels are summarized in the table below.
 
 ```
-cd e2sim/
+cd /e2sim-kpmv3/e2sim/
 mkdir build
-./build_e2sim.sh 3
+sudo ./build_e2sim.sh 3
 ```
 
 <table>
@@ -168,13 +168,14 @@ At this step the software in place to configure and build ns-3:
 
 #### Scenario Zero
 Finally, run an example ns-3 scenario called `Scenario Zero` for testing purpose. This scenario features a Non-StandAlone (NSA) 5G setup in which, its have one LTE eNB positioned in the center of the scenario and four gNBs around it with an inter site distance of 1000 between the eNB and each gNB. You can run the scenario after done the following steps first:
-```
+
 1. First you must be done the installation instructions for the flexric mentiond in the above section 'FlexRiC Installation Instructions'
 2. Second you must done the building steps for ns3-oran simulator section, to build an 'e2sim' and 'ns-3-mmwave-oran' waf.
-3. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
-3. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc' and then run './xapp_kpm_rc'.
-4. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-zero.cc'
-```
+3. The last thing, after you done the building process, it's time to run the **scenario-zero** as a first test case.
+    1. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
+    2. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-zero.cc'
+    3. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc' and then run './xapp_kpm_rc'.
+
 
 And if everything goes as intended we should be able to see in order the following messages as shown in the diagram below, and flowing between the ns-3 and the RIC, or as mentiond sequence diagram represented above:
 
