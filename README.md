@@ -177,9 +177,9 @@ Finally, run an example ns-3 scenario called `Scenario Zero` for testing purpose
     3. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc' and then run './xapp_kpm_rc'.
 
 
-And if everything goes as intended we should be able to see in order the following messages as shown in the diagram below, and flowing between the ns-3 and the RIC, or as mentiond sequence diagram represented above:
+And if everything goes as intended we should be able to see in order the following messages as shown in the Wireshark snapshot below:
 
-![ns-O-RAN](fig/3.png)
+[![Watch the video](fig/5.png)](https://youtu.be/xD4TbgZ74wY)
 
 1. E2 Setup Request (ns-O-RAN to E2 Term on RIC)
 2. E2 Setup Response (E2 Term on RIC to ns-O-RAN)
