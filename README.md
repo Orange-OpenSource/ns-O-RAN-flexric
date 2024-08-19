@@ -159,7 +159,7 @@ cd ns-3-mmwave-oran
 At this step the software in place to configure and build ns-3:
 
 ```
-./waf configure --enable-examples --enable-tests
+./waf configure
 ./waf build
 ```
 
