@@ -58,6 +58,14 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 2. **Update the RC ASN and model to RC v1.02 (In-Prograss)**
 
+### New run flags for ns-3
+
+1. **Set KPM function id for mmwave/lte with '--KPM_E2functionID=(double)'**
+2. **Set RC function id for lte with '--RC_E2functionID=(double)'**
+3. **'--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)**
+4. **New scenario "scenario-zero-with_parallel_loging.cc" as example of use '--E2andLogging=(bool)'**
+5. **Cell deep-sleep implementation (In-Progress)**
+
 ## Requirments
 
 First start with the installation of the prerequisites. In Ubuntu 20.04 LTS, these can be installed with:
@@ -191,10 +199,14 @@ And if everything goes as intended we should be able to see in order the followi
 8. RIC Subscription Delete Request (xApp to RIC to ns-O-RAN)
 9. RIC Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
 
+#### Scenario with parallel logging
+'./waf --run "scratch/scenario-zero-with_parallel_loging.cc --KPM_E2functionID=2 --RC_E2functionID=3 --e2TermIp=10.244.0.70 --simTime=100 --E2andLogging=1"'
+
 ## Contributers
 
 - [Mina Yonan](https://www.linkedin.com/in/mina-yonan-0989b8b9/), Orange Innovation Egypt, mina.awadallah.ext@orange.com
 - [Mostafa Ashraf](https://www.linkedin.com/in/mostafa-ashraf-a62807142/), Orange Innovation Egypt, mostafa.ashraf.ext@orange.com
+- [Kamil Kociszewski](https://www.linkedin.com/in/kociszz/), Orange Innovation Poland, kamil.kociszewski@orange.com
 
 ## Liscence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.txt)
