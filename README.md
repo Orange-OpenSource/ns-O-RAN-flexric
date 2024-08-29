@@ -2,7 +2,7 @@
 
 # Project Introduction
 
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01 and KPM v3. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. The original project of ns-O-RAN in 
+Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01 and KPM v3. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. The original project of ns-O-RAN in 
 [OpenRAN-Gym](https://openrangym.com/tutorials/ns-o-ran).
 
 ![alt text](fig/1.png)
@@ -58,13 +58,32 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 2. **Update the RC ASN and model to RC v1.02 (In-Prograss)**
 
-### New run flags for ns-3
+### New ns-3 features
 
-1. **Set KPM function id for mmwave/lte with '--KPM_E2functionID=(double)'**
-2. **Set RC function id for lte with '--RC_E2functionID=(double)'**
-3. **'--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)**
-4. **New scenario "scenario-zero-with_parallel_loging.cc" as example of use '--E2andLogging=(bool)'**
-5. **Cell deep-sleep implementation (In-Progress)**
+1. **'--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)**
+   
+2. **New scenario "scenario-zero-with_parallel_loging.cc" as example of use '--E2andLogging=(bool)'**
+
+3. **Cell deep-sleep implementation (In-Progress)**
+
+4. **New run flags:**
+
+```
+--KPM_E2functionID=(double)
+--RC_E2functionID=(double)
+--N_MmWaveEnbNodes=(uint8_t)
+--N_Ues=(uint32_t)
+--CenterFrequency=(double)
+--Bandwidth=(double)
+--IntersideDistance=(double)
+```
+
+### Graphical User Interface (GUI) for ns3
+
+1. **Observe Cell/UEs KPIs**
+2. **Run simulation from GUI with selection of simulation parameters**
+3. **Stop simulation**
+4. **Observe cell allocation and UEs positions**
 
 ## Requirments
 
@@ -76,6 +95,14 @@ sudo apt-get update
 sudo apt-get install -y build-essential git cmake libsctp-dev autoconf automake libtool bison flex libboost-all-dev 
 # Requirements for ns-3
 sudo apt-get install g++ python3
+
+```
+For GUI, Docker Compose is needed, to install it please follow [docs.docker.com](https://docs.docker.com/compose/install/).
+
+Also Python 3 is required (version 3.6+). To install it, you can use command:
+
+```
+sudo apt install python3.13 # or other earlier versions
 ```
 
 ## Installation Instructions
@@ -167,9 +194,18 @@ cd ns-3-mmwave-oran
 At this step the software in place to configure and build ns-3:
 
 ```
-./waf configure --enable-examples --enable-tests
+./waf configure
 ./waf build
 ```
+### 3. GUI deployment
+
+```
+cd ns-3-mmwave-oran/GUI
+nano docker-compose.yml # You need to set your ns3 host ip '- NS3_HOST=192.168.100.21', this information is needed for control of ns3 from GUI
+docker-compose up -d # this will deploy environement which includes GUI and InfluxDB database
+
+```
+
 
 ### Usage/deployment 
 
@@ -199,14 +235,24 @@ And if everything goes as intended we should be able to see in order the followi
 8. RIC Subscription Delete Request (xApp to RIC to ns-O-RAN)
 9. RIC Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
 
-#### Scenario with parallel logging
-'./waf --run "scratch/scenario-zero-with_parallel_loging.cc --KPM_E2functionID=2 --RC_E2functionID=3 --e2TermIp=10.244.0.70 --simTime=100 --E2andLogging=1"'
+
+#### Run ns3 from GUI
+
+1. First you need to run script 'python3 ns-3-mmwave-oran/gui_trigger.py' which will be responsible to push ns3 KPIs to database
+2. In your browser, type 127.0.0.1:8000
+3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags.
+4. To see current KPIs, click 'Source Data'
+5. To stop simulation, click 'Stop' on 'Show Form' window
+6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder
+
+![ns-O-RAN](fig/6.png)
 
 ## Contributers
 
 - [Mina Yonan](https://www.linkedin.com/in/mina-yonan-0989b8b9/), Orange Innovation Egypt, mina.awadallah.ext@orange.com
 - [Mostafa Ashraf](https://www.linkedin.com/in/mostafa-ashraf-a62807142/), Orange Innovation Egypt, mostafa.ashraf.ext@orange.com
 - [Kamil Kociszewski](https://www.linkedin.com/in/kociszz/), Orange Innovation Poland, kamil.kociszewski@orange.com
+- [Adrian Oziębło](https://www.linkedin.com/in/adrian-ozi%C4%99b%C5%82o-233a32205/), Orange Innovation Poland, adrian.ozieblo@orange.com
 
 ## Liscence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.txt)
