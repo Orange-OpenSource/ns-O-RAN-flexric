@@ -203,6 +203,7 @@ At this step the software in place to configure and build ns-3:
 cd ns-3-mmwave-oran/GUI
 nano docker-compose.yml # You need to set your ns3 host ip '- NS3_HOST=192.168.100.21', this information is needed for control of ns3 from GUI
 docker-compose up -d # this will deploy environement which includes GUI and InfluxDB database
+pip3 install influxdb
 
 ```
 
@@ -238,7 +239,7 @@ And if everything goes as intended we should be able to see in order the followi
 
 #### Run ns3 from GUI
 
-1. First you need to run script 'python3 ns-3-mmwave-oran/gui_trigger.py' which will be responsible to push ns3 KPIs to database
+1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000
 3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags.
 4. To see current KPIs, click 'Source Data'
