@@ -241,7 +241,7 @@ And if everything goes as intended we should be able to see in order the followi
 
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000
-3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags.
+3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
 4. To see current KPIs, click 'Source Data'
 5. To stop simulation, click 'Stop' on 'Show Form' window
 6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder
