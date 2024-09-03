@@ -202,7 +202,7 @@ At this step the software in place to configure and build ns-3:
 ```
 cd ns-3-mmwave-oran/GUI
 nano docker-compose.yml # You need to set your ns3 host ip '- NS3_HOST=192.168.100.21', this information is needed for control of ns3 from GUI
-docker-compose up -d # this will deploy environement which includes GUI and InfluxDB database
+docker-compose up --build -d # this will deploy environement which includes GUI and InfluxDB database with newest images
 pip3 install influxdb
 
 ```
