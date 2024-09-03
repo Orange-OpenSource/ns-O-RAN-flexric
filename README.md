@@ -94,17 +94,12 @@ sudo apt-get update
 # Requirements for e2sim
 sudo apt-get install -y build-essential git cmake libsctp-dev autoconf automake libtool bison flex libboost-all-dev 
 # Requirements for ns-3
-sudo apt-get install g++ python3
+sudo apt-get install g++
+sudo apt install python3.13 # (or ealier version, but 3.6+ required)
 pip3 install influxdb
 
 ```
 For GUI, Docker Compose is needed, to install it please follow [docs.docker.com](https://docs.docker.com/compose/install/).
-
-Also Python 3 is required (version 3.6+). To install it, you can use command:
-
-```
-sudo apt install python3.13 # or other earlier versions
-```
 
 ## Installation Instructions
 
