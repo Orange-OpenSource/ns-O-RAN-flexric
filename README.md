@@ -96,7 +96,6 @@ sudo apt-get install -y build-essential git cmake libsctp-dev autoconf automake 
 # Requirements for ns-3
 sudo apt-get install g++
 sudo apt install python3.13 # (or ealier version, but 3.6+ required)
-pip3 install influxdb
 
 ```
 For GUI, Docker Compose is needed, to install it please follow [docs.docker.com](https://docs.docker.com/compose/install/).
@@ -197,10 +196,9 @@ At this step the software in place to configure and build ns-3:
 
 ```
 cd ns-3-mmwave-oran/GUI
-nano docker-compose.yml # You need to set your ns3 host ip '- NS3_HOST=192.168.100.21', this information is needed for control of ns3 from GUI
+nano docker-compose.yml # you need to set 'NS3_HOST' IP which is address of machine where ns3 is deployed '- NS3_HOST=192.168.100.21'. This information is needed for control of ns3 from GUI.
 docker-compose up --build -d # this will deploy environement which includes GUI and InfluxDB database with newest images
-
-
+pip3 install influxdb
 ```
 
 
@@ -236,11 +234,16 @@ And if everything goes as intended we should be able to see in order the followi
 #### Run ns3 from GUI
 
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
-2. In your browser, type 127.0.0.1:8000. It take up to 5 minutes to deploy portal, depends on HW.
-3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
-4. To see current KPIs, click 'Source Data'. If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
-5. To stop simulation, click 'Stop' on 'Show Form' window
-6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder
+2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).
+ It take up to 5 minutes to deploy portal, depends on HW.
+3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. 
+ GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. 
+ Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
+4. To see current KPIs, click 'Source Data'. 
+ If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. 
+ If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
+5. To stop simulation, click 'Stop' on 'Show Form' window.
+6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
 
 ![ns-O-RAN](fig/6.png)
 
