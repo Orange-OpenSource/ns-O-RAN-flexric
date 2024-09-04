@@ -2,7 +2,7 @@
 
 # Project Introduction
 
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01 and KPM v3. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. The original project of ns-O-RAN in 
+Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. The original project of ns-O-RAN in 
 [OpenRAN-Gym](https://openrangym.com/tutorials/ns-o-ran).
 
 ![alt text](fig/1.png)
@@ -56,7 +56,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 1. **Update the KPM ASN and model to KPM v3.00**
 
-2. **Update the RC ASN and model to RC v1.02 (In-Prograss)**
+2. **Update the RC ASN and model to RC v1.03 (In-Prograss)**
 
 ## Requirments
 
