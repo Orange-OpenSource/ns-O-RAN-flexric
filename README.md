@@ -75,7 +75,8 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 --N_Ues=(uint32_t)
 --CenterFrequency=(double)
 --Bandwidth=(double)
---IntersideDistance=(double)
+--IntersideDistanceUEs=(double)
+--IntersideDistanceCells=(double)
 ```
 
 ### Graphical User Interface (GUI) for ns3
