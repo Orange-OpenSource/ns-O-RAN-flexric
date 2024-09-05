@@ -85,6 +85,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 2. **Run simulation from GUI with selection of simulation parameters**
 3. **Stop simulation**
 4. **Observe cell allocation and UEs positions**
+5. **Grafana platform deployed to observe simulation results (in-progress - users need to declare InfluxDB queries themselves)**
 
 ## Requirments
 
@@ -245,6 +246,7 @@ And if everything goes as intended we should be able to see in order the followi
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
 5. To stop simulation, click 'Stop' on 'Show Form' window.
 6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
+7. Grafana can be access by typing 127.0.0.1:3000 or 'NS3_HOST':3000 (e.g 127.0.0.1:3000). Example query: 'SELECT LAST("value") FROM "du-cell-2_drb.meanactiveuedl" WHERE $timeFilter'.
 
 ![ns-O-RAN](fig/6.png)
 
