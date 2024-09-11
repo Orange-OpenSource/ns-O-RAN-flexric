@@ -2,7 +2,7 @@
 
 # Project Introduction
 
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. The original project of ns-O-RAN in 
+Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. The original project of ns-O-RAN in 
 [OpenRAN-Gym](https://openrangym.com/tutorials/ns-o-ran).
 
 ![alt text](fig/1.png)
@@ -11,8 +11,8 @@ Given the importance of obtaining a capable and fully open-source platform for x
 
 The ns-O-RAN is composed by three main components, as shown in the figure below:
 
--  The [e2sim](https://github.com/wineslab/ns-o-ran-e2-sim) software, which was originally developed by the OSC community. 
--  The [ns3-mmWave](https://github.com/wineslab/ns-o-ran-ns3-mmwave) version, which was originally developed by the University of Padova and NYU.
+- The [e2sim](https://github.com/wineslab/ns-o-ran-e2-sim) software, which was originally developed by the OSC community. 
+- The [ns3-mmWave](https://github.com/wineslab/ns-o-ran-ns3-mmwave) version, which was originally developed by the University of Padova and NYU.
 - The [ns-O-RAN](https://github.com/o-ran-sc/sim-ns3-o-ran-e2) module, developed by Northeastern University and Mavenir, which is basically an external module that can be plugged in ns-3 and uses the e2sim to create a SCTP connection with the RIC.
 
 ![ns-O-RAN](fig/2.png)
@@ -58,6 +58,39 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 2. **Update the RC ASN and model to RC v1.03 (In-Prograss)**
 
+### New ns-3 features
+
+1. **'--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)**
+   
+2. **New scenario "scenario-zero-with_parallel_loging.cc" as example of use '--E2andLogging=(bool)'**
+
+3. **Cell deep-sleep implementation (In-Progress)**
+
+4. **New run flags:**
+
+```
+--KPM_E2functionID=(double)
+--RC_E2functionID=(double)
+--N_MmWaveEnbNodes=(uint8_t)
+--N_Ues=(uint32_t)
+--CenterFrequency=(double)
+--Bandwidth=(double)
+--IntersideDistanceUEs=(double)
+--IntersideDistanceCells=(double)
+```
+
+### Graphical User Interface (GUI) for ns3
+
+1. **Observe Cell/UEs KPIs**
+
+3. **Run simulation from GUI with selection of simulation parameters**
+
+4. **Stop simulation**
+
+5. **Observe cell allocation and UEs positions**
+
+6. **Grafana platform deployed to observe simulation results (in-progress - users need to declare InfluxDB queries themselves)**
+
 ## Requirments
 
 First start with the installation of the prerequisites. In Ubuntu 20.04 LTS, these can be installed with:
@@ -67,8 +100,11 @@ sudo apt-get update
 # Requirements for e2sim
 sudo apt-get install -y build-essential git cmake libsctp-dev autoconf automake libtool bison flex libboost-all-dev 
 # Requirements for ns-3
-sudo apt-get install g++ python3
+sudo apt-get install g++
+sudo apt install python3.13 # (or ealier version, but 3.6+ required)
+
 ```
+For GUI, Docker Compose is needed, to install it please follow [docs.docker.com](https://docs.docker.com/compose/install/).
 
 ## Installation Instructions
 
@@ -159,9 +195,18 @@ cd ns-3-mmwave-oran
 At this step the software in place to configure and build ns-3:
 
 ```
-./waf configure --enable-examples --enable-tests
+./waf configure
 ./waf build
 ```
+### 3. GUI deployment
+
+```
+cd ns-3-mmwave-oran/GUI
+nano docker-compose.yml # you need to set 'NS3_HOST' IP which is address of machine where ns3 is deployed '- NS3_HOST=192.168.100.21'. This information is needed for control of ns3 from GUI.
+docker-compose up --build -d # this will deploy environement which includes GUI and InfluxDB database with newest images
+pip3 install influxdb
+```
+
 
 ### Usage/deployment 
 
@@ -191,10 +236,43 @@ And if everything goes as intended we should be able to see in order the followi
 8. RIC Subscription Delete Request (xApp to RIC to ns-O-RAN)
 9. RIC Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
 
+#### Run ns3 from GUI
+1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
+2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
+ It take up to 5 minutes to deploy portal, depends on HW.
+3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
+ GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. <br />
+ Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
+4. To see current KPIs, click 'Source Data'. 
+ If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
+ If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
+5. To stop simulation, click 'Stop' on 'Show Form' window.
+6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
+   
+ ![ns-O-RAN](fig/6.png)
+
+7. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
+
+#### Observe KPIs with Grafana
+1. Grafana is being deployed together with GUI through Docker Compose.<br />
+2. It can be accessed by typing 127.0.0.1:3000 or 'NS3_HOST':3000 in the browser. <br />
+3. Dashboards will be shared soon, for test proposes, you can use example query.
+4. Click '+' button and choose 'Create Dashboard'.
+5. Click 'Add an empty panel'.
+6. Click pencil button at the right side of 'FROM' in query builider.
+7. Type: 'SELECT ("value") FROM "du-cell-2_drb.meanactiveuedl" WHERE $timeFilter'.
+8. Click 'Apply'.
+7. Remember to set correct 'Absolute time range' in right corner of Grafana to choose time period when desired simulation started.
+8. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
+
+ ![ns-O-RAN](fig/7.png)
+
 ## Contributers
 
 - [Mina Yonan](https://www.linkedin.com/in/mina-yonan-0989b8b9/), Orange Innovation Egypt, mina.awadallah.ext@orange.com
 - [Mostafa Ashraf](https://www.linkedin.com/in/mostafa-ashraf-a62807142/), Orange Innovation Egypt, mostafa.ashraf.ext@orange.com
+- [Kamil Kociszewski](https://www.linkedin.com/in/kociszz/), Orange Innovation Poland, kamil.kociszewski@orange.com
+- [Adrian Oziębło](https://www.linkedin.com/in/adrian-ozi%C4%99b%C5%82o-233a32205/), Orange Innovation Poland, adrian.ozieblo@orange.com
 
 ## Liscence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.txt)
