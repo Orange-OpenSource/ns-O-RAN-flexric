@@ -1,0 +1,42 @@
+For ue_id:
+1.	ue_position_x_{ue_id}
+2.	ue_position_y_{ue_id}
+3.	ue_position_type_{ue_id}
+4.	ue_position_cell_{ue_id}
+5.	ue_{ue_id}_tb.errtotalnbrdl.1.ueid
+6.	ue_{ue_id}_drb.buffersize.qos.ueid
+7.	ue_{ue_id}_rru.prbuseddl
+8.	ue_{ue_id}_drb.uethpdlpdcpbased.ueid
+9.	ue_{ue_id}_drb.uethpdl.ueid
+10.	ue_{ue_id}_qosflow.pdcppduvolumedl_filter
+11.	ue_{ue_id}_tb.totnbrdlinitial
+12.	ue_{ue_id}_tb.totnbrdlinitial.16qam
+13.	ue_{ue_id}_tb.totnbrdlinitial.64qam
+14.	ue_{ue_id}_tb.totnbrdlinitial.qpsk.ueid
+15.	ue_{ue_id}_tb.totnbrdl.1.ueid
+16.	ue_{ue_id}_qosflow_pdcppduvolumedl_filter_ueid(txpdcppdubytesnrrlc)
+17.	ue_{ue_id}_drb.pdcpsdudelaydl.ueid(pdcp latency)
+18.	ue_{ue_id}_drb_pdcppdunbrdl_qos_ueid(txpdcppdunrrlc)
+19.	ue_{ue_id}_tot_pdcpsdunbrdl_ueid(txdlpackets)
+20.	ue_{ue_id}_drb.pdcpsdubitratedl.ueid(pdcpthroughput)
+21.	ue_{ue_id}_drb.pdcpsduvolumedl_filter.ueid(txbytes)
+22.	ue_{ue_id}_l3 serving sinr
+23.	ue_position_cell_{ue_id}
+24.	ue_{ue_id}_l3 neigh sinr
+25.	ue_{ue_id}_l3 neigh id
+26.	ue_{ue_id}_drb.estabsucc.5qi.ueid
+
+For cell_id:
+1.	du-cell-{cell_id}_tb.errtotalnbrdl.1.ueid
+2.	du-cell-{cell_id}_drb.meanactiveuedl
+3.	du-cell-{cell_id}_drb.buffersize.qos.ueid
+4.	du-cell_{cell_id}_rru.prbuseddl
+5.	du-cell-{cell_id}_qosflow.pdcppduvolumedl_filter
+6.	du-cell-{cell_id}_tb.totnbrdlinitial
+7.	du-cell-{cell_id}_tb.totnbrdlinitial.16qam
+8.	du-cell-{cell_id}_tb.totnbrdlinitial.64qam
+9.	du-cell-{cell_id}_tb.totnbrdlinitial.qpsk.ueid
+10.	du-cell-{cell_id}_tb.totnbrdl.1.ueid
+11.	du-cell-{cell_id}_dlprbusage
+12.	cu-up-cell-{cell_id}_drb.pdcpsdudelaydl (cellaveragelatency)
+13.	cu-up-cell-{cell_id}_m_pdcpbytesdl (celldltxvolume)
