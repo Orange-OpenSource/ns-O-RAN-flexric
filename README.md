@@ -236,19 +236,36 @@ And if everything goes as intended we should be able to see in order the followi
 #### Run ns3 from GUI
 
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
-2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).
+2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
  It take up to 5 minutes to deploy portal, depends on HW.
-3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. 
- GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. 
+3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
+ GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. <br />
  Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
 4. To see current KPIs, click 'Source Data'. 
- If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. 
+ If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
 5. To stop simulation, click 'Stop' on 'Show Form' window.
 6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
-7. Grafana can be access by typing 127.0.0.1:3000 or 'NS3_HOST':3000 (e.g 127.0.0.1:3000). Example query: 'SELECT LAST("value") FROM "du-cell-2_drb.meanactiveuedl" WHERE $timeFilter'.
+   
+ ![ns-O-RAN](fig/6.png)
 
-![ns-O-RAN](fig/6.png)
+7. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
+
+#### Observe KPIs with Grafana
+
+1. Grafana is being deployed together with GUI through Docker Compose.<br />
+2. It can be accessed by typing 127.0.0.1:3000 or 'NS3_HOST':3000 in the browser. <br />
+3. Dashboards will be shared soon, for test proposes, you can use example query.
+4. Click '+' button and choose 'Create Dashboard'.
+5. Click 'Add an empty panel'.
+6. Click pencil button at the right side of 'FROM' in query builider.
+7. Type: 'SELECT ("value") FROM "du-cell-2_drb.meanactiveuedl" WHERE $timeFilter'.
+8. Click 'Apply'.
+7. Remember to set correct 'Absolute time range' in right corner of Grafana to choose time period when desired simulation started.
+8. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
+
+ ![ns-O-RAN](fig/7.png)
+
 
 ## Contributers
 
