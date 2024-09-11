@@ -82,10 +82,14 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 ### Graphical User Interface (GUI) for ns3
 
 1. **Observe Cell/UEs KPIs**
-2. **Run simulation from GUI with selection of simulation parameters**
-3. **Stop simulation**
-4. **Observe cell allocation and UEs positions**
-5. **Grafana platform deployed to observe simulation results (in-progress - users need to declare InfluxDB queries themselves)**
+
+3. **Run simulation from GUI with selection of simulation parameters**
+
+4. **Stop simulation**
+
+5. **Observe cell allocation and UEs positions**
+
+6. **Grafana platform deployed to observe simulation results (in-progress - users need to declare InfluxDB queries themselves)**
 
 ## Requirments
 
