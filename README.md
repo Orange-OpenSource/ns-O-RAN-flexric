@@ -11,8 +11,8 @@ Given the importance of obtaining a capable and fully open-source platform for x
 
 The ns-O-RAN is composed by three main components, as shown in the figure below:
 
--  The [e2sim](https://github.com/wineslab/ns-o-ran-e2-sim) software, which was originally developed by the OSC community. 
--  The [ns3-mmWave](https://github.com/wineslab/ns-o-ran-ns3-mmwave) version, which was originally developed by the University of Padova and NYU.
+- The [e2sim](https://github.com/wineslab/ns-o-ran-e2-sim) software, which was originally developed by the OSC community. 
+- The [ns3-mmWave](https://github.com/wineslab/ns-o-ran-ns3-mmwave) version, which was originally developed by the University of Padova and NYU.
 - The [ns-O-RAN](https://github.com/o-ran-sc/sim-ns3-o-ran-e2) module, developed by Northeastern University and Mavenir, which is basically an external module that can be plugged in ns-3 and uses the e2sim to create a SCTP connection with the RIC.
 
 ![ns-O-RAN](fig/2.png)
@@ -56,7 +56,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 1. **Update the KPM ASN and model to KPM v3.00**
 
-2. **Update the RC ASN and model to RC v1.02 (In-Prograss)**
+2. **Update the RC ASN and model to RC v1.03 (In-Prograss)**
 
 ### New ns-3 features
 
@@ -232,9 +232,7 @@ And if everything goes as intended we should be able to see in order the followi
 8. RIC Subscription Delete Request (xApp to RIC to ns-O-RAN)
 9. RIC Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
 
-
 #### Run ns3 from GUI
-
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
  It take up to 5 minutes to deploy portal, depends on HW.
@@ -252,7 +250,6 @@ And if everything goes as intended we should be able to see in order the followi
 7. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
 
 #### Observe KPIs with Grafana
-
 1. Grafana is being deployed together with GUI through Docker Compose.<br />
 2. It can be accessed by typing 127.0.0.1:3000 or 'NS3_HOST':3000 in the browser. <br />
 3. Dashboards will be shared soon, for test proposes, you can use example query.
@@ -265,7 +262,6 @@ And if everything goes as intended we should be able to see in order the followi
 8. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
 
  ![ns-O-RAN](fig/7.png)
-
 
 ## Contributers
 
