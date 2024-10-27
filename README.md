@@ -1,4 +1,10 @@
 # ns-o-ran-flexric
+<div align="center">
+<a href="https://github.com/Orange-OpenSource/ns-O-RAN-flexric">
+  <img src="fig/logo.png" alt="Project Logo" width="200"/>
+</a>
+</div>
+
 
 # Project Introduction
 
@@ -25,7 +31,9 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
  
         - Edit the RAN Function IDs for KPM and RC ​
         - Reformat the size of the message to match FlexRIC (62 byte)​
-        - Update the KPM ASN and model to KPM v3 ​
+        - Update the KPM description and model to KPM v3 
+        - Upda​te the RC  description and model to RC v1.03
+        - Add RIC styles 4 
  
  2. **E2 Subscription Response** ​
  
@@ -38,17 +46,17 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
           -Implemented from scratch
 4. **RIC Control Request** ​
 
-          - Update the message to match E2SM RC v1.01​
+          - Update the message to match E2SM RC v1.03
  
  5. **RIC Subscription delete request/response**
       
       
         - Implemented from scratch
 
-6. **RIC Subscription modification response (In-Prograss)**
+6. **RIC Subscription modification response (In-Progress)**
 
         - Implemented from scratch
-7. **RIC Subscription modification confirm (In-Prograss)**
+7. **RIC Subscription modification confirm (In-Progress)**
 
         - Implemented from scratch
       
@@ -56,7 +64,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 1. **Update the KPM ASN and model to KPM v3.00**
 
-2. **Update the RC ASN and model to RC v1.03 (In-Prograss)**
+2. **Update the RC ASN and model to RC v1.03**
 
 ### New ns-3 features
 
@@ -267,12 +275,26 @@ And if everything goes as intended we should be able to see in order the followi
 
  ![ns-O-RAN](fig/7.png)
 
+## Further Resources
+
+### Participation in 10th OpenAirInterface Anniversaray Workshop
+
+
+- **[RIC Testing as a Platform Demo Architecure ](fig/8.png)**: Full Architecture
+- **[FlexRIC Community Announcement](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/dev?ref_type=heads#34--integration-with-ns3-oran-ran-simulator)**: GitLab Link
+- **[OAI Demo Brochure](https://github.com/Orange-OpenSource/ns-O-RAN-flexric/blob/main/docs/OAI%20Demo%20Workshop%20Data%20Brochure%20v3.pdf)**: Link
+- **[OAI Demo Video](https://youtu.be/PgwKyk8b6K0)**: OpenAirInterface 10th Anniversary Workshop
+- **[KPM-RC xApp Demo](https://www.youtube.com/watch?v=xD4TbgZ74wY)**: YouTube Link 
+
+
 ## Contributers
 
-- [Mina Yonan](https://www.linkedin.com/in/mina-yonan-0989b8b9/), Orange Innovation Egypt, mina.awadallah.ext@orange.com
+- [Mina Yonan](https://www.linkedin.com/in/mina-yonan-0989b8b9/), Orange Innovation Egypt, mina.awadallah@orange.com
 - [Mostafa Ashraf](https://www.linkedin.com/in/mostafa-ashraf-a62807142/), Orange Innovation Egypt, mostafa.ashraf.ext@orange.com
 - [Kamil Kociszewski](https://www.linkedin.com/in/kociszz/), Orange Innovation Poland, kamil.kociszewski@orange.com
 - [Adrian Oziębło](https://www.linkedin.com/in/adrian-ozi%C4%99b%C5%82o-233a32205/), Orange Innovation Poland, adrian.ozieblo@orange.com
+- [Abdelrhman Soliman](https://www.linkedin.com/in/abdelrahman-khaled-anwer), Orange Innovation Egypt, abdelrhman.soliman.ext@orange.com
+- [Aya Kamal](http://linkedin.com/in/aya-kamal-elbakly), Orange Innovation Egypt, aya.kamal.ext@orange.com
 
 ## Liscence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.txt)
