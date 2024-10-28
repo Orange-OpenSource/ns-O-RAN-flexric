@@ -1,17 +1,20 @@
 # ns-o-ran-flexric
 <div align="center">
 <a href="https://github.com/Orange-OpenSource/ns-O-RAN-flexric">
-  <img src="fig/logo.png" alt="Project Logo" width="200"/>
+  <img src="fig/logo.png" alt="Project Logo" width="400"/>
 </a>
 </div>
 
-
-# Project Introduction
+## Project Introduction
 
 Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. The original project of ns-O-RAN in 
 [OpenRAN-Gym](https://openrangym.com/tutorials/ns-o-ran).
 
 ![alt text](fig/1.png)
+
+## Project Explanation and Demo
+
+[![Watch the video](fig/5.png)](https://youtu.be/143SPX5sz50)
 
 ## Code Structure
 
@@ -43,7 +46,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
  
 3. **RIC Control Acknoweldege** ​
 
-          -Implemented from scratch
+          - Implemented from scratch
 4. **RIC Control Request** ​
 
           - Update the message to match E2SM RC v1.03
@@ -62,42 +65,42 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
       
 ### The implementation of KPM and RC
 
-1. **Update the KPM ASN and model to KPM v3.00**
+1. Update the KPM ASN and model to KPM v3.00
 
-2. **Update the RC ASN and model to RC v1.03**
+2. Update the RC ASN and model to RC v1.03
 
 ### New ns-3 features
 
-1. **'--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)**
+1. '--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)
    
-2. **New scenario "scenario-zero-with_parallel_loging.cc" as example of use '--E2andLogging=(bool)'**
+2. New scenario "scenario-zero-with_parallel_loging.cc" as example of use '--E2andLogging=(bool)'
 
-3. **Cell deep-sleep implementation (In-Progress)**
+3. Cell deep-sleep implementation (In-Progress)
 
 4. **New run flags:**
 
 ```
---KPM_E2functionID=(double)
---RC_E2functionID=(double)
---N_MmWaveEnbNodes=(uint8_t)
---N_Ues=(uint32_t)
---CenterFrequency=(double)
---Bandwidth=(double)
---IntersideDistanceUEs=(double)
---IntersideDistanceCells=(double)
+  --KPM_E2functionID=(double)
+  --RC_E2functionID=(double)
+  --N_MmWaveEnbNodes=(uint8_t)
+  --N_Ues=(uint32_t)
+  --CenterFrequency=(double)
+  --Bandwidth=(double)
+  --IntersideDistanceUEs=(double)
+  --IntersideDistanceCells=(double)
 ```
 
 ### Graphical User Interface (GUI) for ns3
 
-1. **Observe Cell/UEs KPIs**
+1. Observe Cell/UEs KPIs
 
-3. **Run simulation from GUI with selection of simulation parameters**
+3. Run simulation from GUI with selection of simulation parameters
 
-4. **Stop simulation**
+4. Stop simulation
 
-5. **Observe cell allocation and UEs positions**
+5. Observe cell allocation and UEs positions
 
-6. **Grafana platform deployed to observe simulation results (in-progress - users need to declare InfluxDB queries themselves)**
+6. Grafana platform deployed to observe simulation results (in-progress - users need to declare InfluxDB queries themselves)
 
 ## Requirments
 
@@ -122,7 +125,7 @@ The prepation of enviroment for running testing examples can be done when 'near-
 
 ### 1. FlexRiC Installation Instructions
 
-The first release for ns-O-RAN-flexric proejct is working with a mature commit for flexric, you **MUST** follow installtion and deployment instructions, under commit number [d3ff8791](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/d3ff879135d036632d7938c2085dbf4577759225) before use the simulator.
+The ns-O-RAN-flexric proejct is working with the latest mature commit on flexric in dev branch, you **MUST** follow installtion and deployment instructions, under commit number [5bca8030](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/5bca8030ec551c8d4499cf38357d13e6c98666d3) before use the simulator.
 
 ### 2. ns-O-RAN-flexric Installation Instructions
 
@@ -181,19 +184,6 @@ sudo ./build_e2sim.sh 3
   </tbody>
 </table>
 
-This last command shall configure the cmake project and install the e2sim on the system. Its main actions are also in the aforementioned Dockerfile that we report here to clarify the operations conducted by the script:
-
-```
-RUN mkdir /workspace/e2sim/e2sim/build
-WORKDIR /workspace/e2sim/e2sim/build # Creation and cd on the build directory
-RUN cmake .. -DDEV_PKG=1 -DLOG_LEVEL=${log_level_e2sim} # build of the project with the LOG_LEVEL desired
-
-RUN make package # Creation of the package
-RUN echo "Going to install e2sim-dev"
-RUN dpkg --install ./e2sim-dev_1.0.0_amd64.deb # Installation of the generated package on the system
-RUN ldconfig  # library update to make the package linkable from ns-3 without rebooting the machine
-```
-
 Navigate to ns3-mmWave project:
 
 ```
@@ -244,7 +234,7 @@ And if everything goes as intended we should be able to see in order the followi
 8. RIC Subscription Delete Request (xApp to RIC to ns-O-RAN)
 9. RIC Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
 
-#### Run ns3 from GUI
+#### Run RIC-TaaP Studio
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
  It take up to 5 minutes to deploy portal, depends on HW.
