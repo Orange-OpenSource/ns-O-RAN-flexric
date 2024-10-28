@@ -14,7 +14,7 @@ Given the importance of obtaining a capable and fully open-source platform for x
 
 ## Project Explanation and Demo
 
-[![Watch the video](fig/5.png)](https://youtu.be/143SPX5sz50)
+[![Watch the video](fig/5.png)](https://youtu.be/PgwKyk8b6K0)
 
 ## Code Structure
 
