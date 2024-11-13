@@ -133,7 +133,7 @@ For the FlexRIC [installation instructions](https://gitlab.eurecom.fr/mosaic5g/f
 git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git && cd flexric
 ```
 ```
-git checkout dev
+git checkout dev && git checkout 5bca8030
 ```
 ```
 mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
