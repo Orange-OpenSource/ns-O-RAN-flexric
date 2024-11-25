@@ -125,7 +125,23 @@ The prepation of enviroment for running testing examples can be done when 'near-
 
 ### 1. FlexRiC Installation Instructions
 
-The ns-O-RAN-flexric proejct is working with the latest mature commit on flexric in dev branch, you **MUST** follow installtion and deployment instructions, under commit number [5bca8030](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/5bca8030ec551c8d4499cf38357d13e6c98666d3) before use the simulator.
+The ns-O-RAN-flexric project is utilizing the latest stable commit of FlexRIC in the **dev** branch. You **MUST** adhere to the installation and deployment guidelines outlined under commit number [5bca8030](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/5bca8030ec551c8d4499cf38357d13e6c98666d3) before use the simulator.
+
+For the FlexRIC [installation instructions](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/5bca8030ec551c8d4499cf38357d13e6c98666d3#1-installation), once you reach [section 1.3](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/5bca8030ec551c8d4499cf38357d13e6c98666d3#13-clone-the-flexric-project-build-and-install-it), note that FlexRIC is configured to build the nearRT-RIC with **E2AP v2.03** and **KPM v2.03** by default. However, the ns-O-RAN simulator uses **E2AP v1.01** and **KPM v3.00**. After completing the mentioned installation prerequisites, so you should execute the following commands:
+
+```
+git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git && cd flexric
+```
+```
+git checkout dev && git checkout 5bca8030
+```
+```
+mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
+```
+Finally, to install the Service Models (SM) on your machine, use:
+```
+sudo make install
+```
 
 ### 2. ns-O-RAN-flexric Installation Instructions
 
