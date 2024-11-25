@@ -270,14 +270,11 @@ And if everything goes as intended we should be able to see in order the followi
 #### Observe KPIs with Grafana
 1. Grafana is being deployed together with GUI through Docker Compose.<br />
 2. It can be accessed by typing 127.0.0.1:3000 or 'NS3_HOST':3000 in the browser. <br />
-3. Dashboards will be shared soon, for test proposes, you can use example query.
-4. Click '+' button and choose 'Create Dashboard'.
-5. Click 'Add an empty panel'.
-6. Click pencil button at the right side of 'FROM' in query builider.
-7. Type: 'SELECT ("value") FROM "du-cell-2_drb.meanactiveuedl" WHERE $timeFilter'.
-8. Click 'Apply'.
-7. Remember to set correct 'Absolute time range' in right corner of Grafana to choose time period when desired simulation started.
-8. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
+3. Choose 'Dashboards' on the left sidebar and then click 'Manage'. <br />
+4. Here you can choose 'per_Cell_stats' or 'per_UE_stats'. <br />
+5. Remember to set correctly observation time period in the right corner of the Grafana. <br />
+6. You can also set auto-refresh in the right corner of the Grafana. <br />
+6. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
 
  ![ns-O-RAN](fig/7.png)
 
@@ -301,6 +298,8 @@ And if everything goes as intended we should be able to see in order the followi
 - [Adrian Oziębło](https://www.linkedin.com/in/adrian-ozi%C4%99b%C5%82o-233a32205/), Orange Innovation Poland, adrian.ozieblo@orange.com
 - [Abdelrhman Soliman](https://www.linkedin.com/in/abdelrahman-khaled-anwer), Orange Innovation Egypt, abdelrhman.soliman.ext@orange.com
 - [Aya Kamal](http://linkedin.com/in/aya-kamal-elbakly), Orange Innovation Egypt, aya.kamal.ext@orange.com
+- [Bartosz Rak](https://www.linkedin.com/in/bartosz-rak-telco/), Orange Innovation Poland, bartosz.rak@orange.com
+
 
 ## Liscence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.txt)
