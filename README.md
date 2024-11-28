@@ -7,7 +7,7 @@
 
 ## Project Introduction
 
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. The original project of ns-O-RAN in 
+Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. For integration with Non-RT RIC, we include our A1 Mediator which allows to exchange policies between xApps and rApps.  The original project of ns-O-RAN in 
 [OpenRAN-Gym](https://openrangym.com/tutorials/ns-o-ran).
 
 ![alt text](fig/1.png)
@@ -77,7 +77,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 3. Cell deep-sleep implementation (In-Progress)
 
-4. **New run flags:**
+4. New run flags:
 
 ```
   --KPM_E2functionID=(double)
@@ -280,6 +280,43 @@ And if everything goes as intended we should be able to see in order the followi
 8. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
 
  ![ns-O-RAN](fig/7.png)
+
+ #### A1 mediator for RIC TaaP
+ A1_mediator_standalone base on OSC A1 Mediator. A1 mediator allows to store and exchange policies between xApps and rApps using O-RAN standarized A1 interface methods.
+ 
+ Repository includes also local FlexRIC build with example xapp_kpm_rc_a1 xApp and API.
+
+ Supported A1 API calls:
+
+ | **Method** | **Endpoint**                                                | **Description**                |
+|------------|-------------------------------------------------------------|--------------------------------|
+| GET        | /a1-p/policytypes                                           | List Policy Types          |
+| GET        | /a1-p/policytypes/(policy_type_id)                          | Get Policy Type               |
+| PUT        | /a1-p/policytypes/(policy_type_id)                         | Create Policy Type            |
+| DELETE     | /a1-p/policytypes/(policy_type_id)                         | Delete Policy Type            |
+| GET        | /a1-p/policytypes/(policy_type_id)/policies                 | List Policy Instances         |
+| PUT        | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id) | Create Policy Instance        |
+| DELETE     | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id) | Delete Policy Instance        |
+| GET        | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id)/status | Get Policy Instance Status    |
+
+**Run A1 Mediator**
+```
+cd A1_Mediator_standalone/A1_Mediator
+pip3 install -r requirements.txt
+cd app
+python3 main.py
+type in browser: (host_ip):9000/docs #to see available APIs
+```
+**Run test xApp with local FlexRIC build:**
+```
+build FlexRIC following repo instructions
+run FlexRIC: 
+./A1_Mediator_standalone/flexric-a1-xapp-A1_integration_RIC_TaaP/build/examples/ric/nearRT-RIC
+run ns3 with FlexRIC connection
+run xapp_kpm_rc_a1 xApp:
+./A1_Mediator_standalone/flexric-a1-xapp-A1_integration_RIC_TaaP/build/examples/xApp/c/kpm_rc_A1/xapp_kpm_rc_a1
+```
+
 
 ## Further Resources
 
