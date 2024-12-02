@@ -5,7 +5,7 @@
 [submodule "ns-3-mmwave-oran"]
 	path = ns-3-mmwave-oran
 	url = https://github.com/MinaYonan123/ns-3-mmwave-oran.git
-	branch = release
+	branch = A1_GUI_EXTENSION
 [submodule "A1_Mediator_standalone"]
 	path = A1_Mediator_standalone
 	url = https://github.com/kamilkociszewski/A1_Mediator_standalone.git
