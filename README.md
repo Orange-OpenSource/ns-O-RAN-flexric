@@ -282,9 +282,8 @@ And if everything goes as intended we should be able to see in order the followi
  ![ns-O-RAN](fig/7.png)
 
  #### A1 mediator for RIC TaaP
- A1_mediator_standalone base on OSC A1 Mediator. A1 mediator allows to store and exchange policies between xApps and rApps using O-RAN standarized A1 interface methods.
- 
- Repository includes also local FlexRIC build with example xapp_kpm_rc_a1 xApp and API.
+ A1 mediator allows to store and exchange policies between xApps and rApps using O-RAN standarized A1 interface methods.<br>
+ Please see sub-repository [A1_Mediator_standalone](https://github.com/kamilkociszewski/A1_Mediator_standalone.git) README for more details. 
 
  Supported A1 API calls:
 
@@ -299,22 +298,27 @@ And if everything goes as intended we should be able to see in order the followi
 | DELETE     | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id) | Delete Policy Instance        |
 | GET        | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id)/status | Get Policy Instance Status    |
 
-**Run A1 Mediator**
+
+Run A1 Mediator
 ```
-cd A1_Mediator_standalone/A1_Mediator
+cd A1_Mediator
 pip3 install -r requirements.txt
 cd app
 python3 main.py
 type in browser: (host_ip):9000/docs #to see available APIs
 ```
-**Run test xApp with local FlexRIC build:**
+
+Run test xApp with FlexRIC:
+1. Clone custom FlexRIC dev build from here: [FlexRIC](https://gitlab.eurecom.fr/Kociszz/flexric-a1-xapp/-/tree/A1_integration_RIC_TaaP?ref_type=heads)
+2. Build FlexRIC following repo instructions
+3. Start **RIC**
 ```
-build FlexRIC following repo instructions
-run FlexRIC: 
-./A1_Mediator_standalone/flexric-a1-xapp-A1_integration_RIC_TaaP/build/examples/ric/nearRT-RIC
-run ns3 with FlexRIC connection
-run xapp_kpm_rc_a1 xApp:
-./A1_Mediator_standalone/flexric-a1-xapp-A1_integration_RIC_TaaP/build/examples/xApp/c/kpm_rc_A1/xapp_kpm_rc_a1
+./build/examples/ric/nearRT-RIC
+```
+4. Run **ns3** simulation with RIC connection
+5. Start **xapp_kpm_rc_a1** xApp
+```
+./build/examples/xApp/c/kpm_rc_A1/xapp_kpm_rc_a1
 ```
 
 
