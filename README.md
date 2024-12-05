@@ -7,7 +7,7 @@
 
 ## Project Introduction
 
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. The original project of ns-O-RAN in 
+Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. For integration with Non-RT RIC, we include our A1 Mediator which allows to exchange policies between xApps and rApps.  The original project of ns-O-RAN in
 [OpenRAN-Gym](https://openrangym.com/tutorials/ns-o-ran).
 
 ![alt text](fig/1.png)
@@ -20,7 +20,7 @@ Given the importance of obtaining a capable and fully open-source platform for x
 
 The ns-O-RAN is composed by three main components, as shown in the figure below:
 
-- The [e2sim](https://github.com/wineslab/ns-o-ran-e2-sim) software, which was originally developed by the OSC community. 
+- The [e2sim](https://github.com/wineslab/ns-o-ran-e2-sim) software, which was originally developed by the OSC community.
 - The [ns3-mmWave](https://github.com/wineslab/ns-o-ran-ns3-mmwave) version, which was originally developed by the University of Padova and NYU.
 - The [ns-O-RAN](https://github.com/o-ran-sc/sim-ns3-o-ran-e2) module, developed by Northeastern University and Mavenir, which is basically an external module that can be plugged in ns-3 and uses the e2sim to create a SCTP connection with the RIC.
 
@@ -30,30 +30,30 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 ### The implemetation of the E2APv1.01 includes:
 
- 1. **E2 Setup request**
- 
-        - Edit the RAN Function IDs for KPM and RC ​
-        - Reformat the size of the message to match FlexRIC (62 byte)​
-        - Update the KPM description and model to KPM v3 
-        - Upda​te the RC  description and model to RC v1.03
-        - Add RIC styles 4 
- 
- 2. **E2 Subscription Response** ​
- 
-        - Add RAN Function NotAdmitted IE to the message​
-        - Update the message to match KPM v3.0​
-        - Fill New RIC indication messages formats (Format 3 )​
- 
+1. **E2 Setup request**
+
+       - Edit the RAN Function IDs for KPM and RC ​
+       - Reformat the size of the message to match FlexRIC (62 byte)​
+       - Update the KPM description and model to KPM v3 
+       - Upda​te the RC  description and model to RC v1.03
+       - Add RIC styles 4 
+
+2. **E2 Subscription Response** ​
+
+       - Add RAN Function NotAdmitted IE to the message​
+       - Update the message to match KPM v3.0​
+       - Fill New RIC indication messages formats (Format 3 )​
+
 3. **RIC Control Acknoweldege** ​
 
           - Implemented from scratch
 4. **RIC Control Request** ​
 
           - Update the message to match E2SM RC v1.03
- 
- 5. **RIC Subscription delete request/response**
-      
-      
+
+5. **RIC Subscription delete request/response**
+
+
         - Implemented from scratch
 
 6. **RIC Subscription modification response (In-Progress)**
@@ -62,7 +62,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 7. **RIC Subscription modification confirm (In-Progress)**
 
         - Implemented from scratch
-      
+
 ### The implementation of KPM and RC
 
 1. Update the KPM ASN and model to KPM v3.00
@@ -72,12 +72,12 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 ### New ns-3 features
 
 1. '--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)
-   
+
 2. New scenario "scenario-zero-with_parallel_loging.cc" as example of use '--E2andLogging=(bool)'
 
 3. Cell deep-sleep implementation (In-Progress)
 
-4. **New run flags:**
+4. New run flags:
 
 ```
   --KPM_E2functionID=(double)
@@ -145,7 +145,7 @@ sudo make install
 
 ### 2. ns-O-RAN-flexric Installation Instructions
 
-First you need to clone the project 
+First you need to clone the project
 
 ```
 git clone --recurse-submodules https://github.com/Orange-OpenSource/ns-O-RAN-flexric
@@ -222,7 +222,7 @@ pip3 install influxdb
 ```
 
 
-### Usage/deployment 
+### Usage/deployment
 
 
 #### Scenario Zero
@@ -253,17 +253,17 @@ And if everything goes as intended we should be able to see in order the followi
 #### Run RIC-TaaP Studio
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
- It take up to 5 minutes to deploy portal, depends on HW.
+   It take up to 5 minutes to deploy portal, depends on HW.
 3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
- GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. <br />
- Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
-4. To see current KPIs, click 'Source Data'. 
- If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
- If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
+   GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. <br />
+   Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
+4. To see current KPIs, click 'Source Data'.
+   If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
+   If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
 5. To stop simulation, click 'Stop' on 'Show Form' window.
 6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
-   
- ![ns-O-RAN](fig/6.png)
+
+![ns-O-RAN](fig/6.png)
 
 7. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
 
@@ -279,7 +279,48 @@ And if everything goes as intended we should be able to see in order the followi
 7. Remember to set correct 'Absolute time range' in right corner of Grafana to choose time period when desired simulation started.
 8. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
 
- ![ns-O-RAN](fig/7.png)
+![ns-O-RAN](fig/7.png)
+
+#### A1 mediator for RIC TaaP
+A1 mediator allows to store and exchange policies between xApps and rApps using O-RAN standarized A1 interface methods.<br>
+Please see sub-repository [A1_Mediator_standalone](https://github.com/kamilkociszewski/A1_Mediator_standalone.git) README for more details.
+
+Supported A1 API calls:
+
+| **Method** | **Endpoint**                                                | **Description**                |
+|------------|-------------------------------------------------------------|--------------------------------|
+| GET        | /a1-p/policytypes                                           | List Policy Types          |
+| GET        | /a1-p/policytypes/(policy_type_id)                          | Get Policy Type               |
+| PUT        | /a1-p/policytypes/(policy_type_id)                         | Create Policy Type            |
+| DELETE     | /a1-p/policytypes/(policy_type_id)                         | Delete Policy Type            |
+| GET        | /a1-p/policytypes/(policy_type_id)/policies                 | List Policy Instances         |
+| PUT        | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id) | Create Policy Instance        |
+| DELETE     | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id) | Delete Policy Instance        |
+| GET        | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id)/status | Get Policy Instance Status    |
+
+
+Run A1 Mediator
+```
+cd A1_Mediator
+pip3 install -r requirements.txt
+cd app
+python3 main.py
+type in browser: (host_ip):9000/docs #to see available APIs
+```
+
+Run test xApp with FlexRIC:
+1. Clone custom FlexRIC dev build from here: [FlexRIC](https://gitlab.eurecom.fr/Kociszz/flexric-a1-xapp/-/tree/A1_integration_RIC_TaaP?ref_type=heads)
+2. Build FlexRIC following repo instructions
+3. Start **RIC**
+```
+./build/examples/ric/nearRT-RIC
+```
+4. Run **ns3** simulation with RIC connection
+5. Start **xapp_kpm_rc_a1** xApp
+```
+./build/examples/xApp/c/kpm_rc_A1/xapp_kpm_rc_a1
+```
+
 
 ## Further Resources
 
@@ -290,7 +331,7 @@ And if everything goes as intended we should be able to see in order the followi
 - **[FlexRIC Community Announcement](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/dev?ref_type=heads#34--integration-with-ns3-oran-ran-simulator)**: GitLab Link
 - **[OAI Demo Brochure](https://github.com/Orange-OpenSource/ns-O-RAN-flexric/blob/main/docs/OAI%20Demo%20Workshop%20Data%20Brochure%20v3.pdf)**: Link
 - **[OAI Demo Video](https://youtu.be/PgwKyk8b6K0)**: OpenAirInterface 10th Anniversary Workshop
-- **[KPM-RC xApp Demo](https://www.youtube.com/watch?v=xD4TbgZ74wY)**: YouTube Link 
+- **[KPM-RC xApp Demo](https://www.youtube.com/watch?v=xD4TbgZ74wY)**: YouTube Link
 
 
 ## Contributers
@@ -304,21 +345,3 @@ And if everything goes as intended we should be able to see in order the followi
 
 ## Liscence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.txt)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
