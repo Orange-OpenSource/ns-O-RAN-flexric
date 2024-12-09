@@ -273,7 +273,7 @@ And if everything goes as intended we should be able to see in order the followi
 The handover xApp enables the initiation of control actions to make handover requests with the following details:
 
 - The handover request is sent to the mmWave cell located in the middle of the scenario.(Note: The handover xApp is a component of the full ES xApp, where the source and target cells are determined based on the KPM indication. Refer to section 4.3 for more details.)
-
+- The Handover xApp initiates handover requests for all UEs associated with the mmWave cell co-located with the LTE node.
 - Each UE requires a separate control request.
 
 1. First, you need to switch to [oie-ric-taap-xapps](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/oie-ric-taap-xapps?ref_type=heads) branch in Flexric reprocitory
