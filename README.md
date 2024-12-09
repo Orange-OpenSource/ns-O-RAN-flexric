@@ -273,14 +273,15 @@ And if everything goes as intended we should be able to see in order the followi
 The handover xApp enables the initiation of control actions to make handover requests with the following details:
 
 - The handover request is sent to the mmWave cell located in the middle of the scenario.(Note: The handover xApp is a component of the full ES xApp, where the source and target cells are determined based on the KPM indication. Refer to section 4.3 for more details.)
-
+- The Handover xApp initiates handover requests for all UEs associated with the mmWave cell co-located with the LTE node.
 - Each UE requires a separate control request.
 
 1. First, you need to switch to [oie-ric-taap-xapps](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/oie-ric-taap-xapps?ref_type=heads) branch in Flexric reprocitory
 2. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
 3. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-three.cc'
-4. Navigate to '/path/to/flexric./build/examples/xApp/c/ctrl/xapp_rc_handover_ctrl ' 6.and then run './xapp_rc_handover_ctrl'.
-5. Use the RIC-TaaP Studio or Grafana dashboard to observe the handover operations.
+4. Navigate to '/path/to/flexric./build/examples/xApp/c/ctrl/xapp_rc_handover_ctrl ' .and then run './xapp_rc_handover_ctrl'.
+5. Use The RIC-TaaP Studio, following Section 6.4.3, Points 1,2,3,4 and 6 or Grafana dashboard to observe the handover operations.
+The output of the handover operation is documented and can be reviewed in detail within this [document.](docs/handover_operation.pdf) .
 
 
 
@@ -288,18 +289,20 @@ The handover xApp enables the initiation of control actions to make handover req
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
  It take up to 5 minutes to deploy portal, depends on HW.
-3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
+3. Connect to FlexRic by run Flexric in the bachground and mark on webpage 'Connect to FlexRIC'
+4. Click on webpage 'Show form',choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
  GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. <br />
  Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
-4. To see current KPIs, click 'Source Data'. 
+5. To see current KPIs, click 'Source Data'. 
  If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
-5. To stop simulation, click 'Stop' on 'Show Form' window.
-6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
+6. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap prameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric./build/examples/xApp/c/ctrl/xapp_rc_handover_ctrl ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
+7. To stop simulation, click 'Stop' on 'Show Form' window.
+8. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
    
  ![ns-O-RAN](fig/6.png)
 
-7. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
+9. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
 
 #### 6.4.4 Observe KPIs with Grafana
 1. Grafana is being deployed together with GUI through Docker Compose.<br />
