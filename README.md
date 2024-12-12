@@ -297,7 +297,40 @@ Supported A1 API calls:
 | PUT        | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id) | Create Policy Instance        |
 | DELETE     | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id) | Delete Policy Instance        |
 | GET        | /a1-p/policytypes/(policy_type_id)/policies/(policy_instance_id)/status | Get Policy Instance Status    |
+Example Policy Type:
+```json
+{
+   "name": "es_policy",
+   "description": "Simplified - O-RAN standard Energy saving policy",
+   "policy_type_id": 10000,
+   "create_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+         "cellID": {
+            "type": "integer",
+            "default": 0
+         },
+         "ES_State": {
+            "type": "bool",
+            "default": false
+         }
+      },
+      "additionalProperties": false
+   }
+}
+```
+Please note that current version of A1 Mediator supports policies that allows only to dynamically define new fields under predefined "properties" object field.
+Other existing fields can be modified, but policy schema should not be modified, e.g. adding new objects. API will not allow to modify them.
 
+Example Policy Instance:
+```json
+{
+   "cellID": 10,
+   "ES_State": true
+}
+
+```
 
 Run A1 Mediator
 ```
