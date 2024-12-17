@@ -141,7 +141,7 @@ The prepation of enviroment for running testing examples can be done when 'near-
 
 ![ns-O-RAN](fig/4.png)
 
-### 6.1 FlexRiC Installation Instructions
+### 1 FlexRiC Installation Instructions
 
 The ns-O-RAN-flexric project is utilizing the latest stable commit of FlexRIC in the **dev** branch. You **MUST** adhere to the installation and deployment guidelines outlined under commit number [5bca8030](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/5bca8030ec551c8d4499cf38357d13e6c98666d3) before use the simulator.
 
@@ -161,7 +161,7 @@ Finally, to install the Service Models (SM) on your machine, use:
 sudo make install
 ```
 
-### 6.2 ns-O-RAN-flexric Installation Instructions
+### 2 ns-O-RAN-flexric Installation Instructions
 
 First you need to clone the project 
 
@@ -177,7 +177,17 @@ If you made a clone before and there are new updates so you need to make recursi
 ```
 git pull --recurse-submodules https://github.com/Orange-OpenSource/ns-O-RAN-flexric
 ```
+When checkout to any branch, to ensure you assiocated submodule branch
 
+```
+git config --global submodule.recurse true
+git checkout <branch_name>
+```
+or
+```
+git checkout <branch_name>   && git submodule update --init --recursive
+
+```
 To set up the environment for ORAN E2 simulator, navigate to the `/e2sim-kpmv3/e2sim` directory. Create a new directory named build. Then execute the script `build_e2sim.sh` with the argument `3` to enable LOG_LEVEL (DEBUG). This is useful to debug the exchange of the messages between the ns-3 and the RIC, but also there are a different debug levels that can be setup. These levels are summarized in the table below.
 
 ```
