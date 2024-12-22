@@ -4,3 +4,6 @@
 [submodule "ns-3-mmwave-oran"]
 	path = ns-3-mmwave-oran
 	url = https://github.com/MinaYonan123/ns-3-mmwave-oran.git
+[submodule "ns3-oran-lena-nr"]
+	path = ns3-oran-lena-nr
+	url = https://github.com/MinaYonan123/ns3-oran-lena-nr.git
