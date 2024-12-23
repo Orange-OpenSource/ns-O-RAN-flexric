@@ -7,8 +7,7 @@
 
 ## 1. Project Introduction
 
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. The original project of ns-O-RAN in 
-[OpenRAN-Gym](https://openrangym.com/ran-frameworks/ns-o-ran).
+Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with [ns-O-RAN](https://openrangym.com/ran-frameworks/ns-o-ran) simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) at Northeastren university, university of padova and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. 
 
 ![alt text](fig/ns-o-ran-flexric.png)
 
@@ -36,36 +35,40 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
         - Reformat the size of the message to match FlexRIC (62 byte)​
         - Update the KPM description and model to KPM v3 
         - Upda​te the RC  description and model to RC v1.03
-        - Add RIC styles 4 
+        - Add RICReportstyle 4
+        - Add RICEventTrigger 
  
  2. **E2 Subscription Response** ​
- 
         - Add RAN Function NotAdmitted IE to the message​
+
+ 3. **RIC Indication** ​
+
         - Update the message to match KPM v3.0​
         - Fill New RIC indication messages formats (Format 3)​
+
         
-3. **RIC Control Request** ​
+4. **RIC Control Request** ​
 
           - Add RIC style type 3 
           - Add Connected Mode Mobility Managament (Section 7.6.4)
           - Add Control Action ID 1 (Handover Control) (Section 8.4.4.1)
  
-3. **RIC Control Acknoweldege** ​
+5. **RIC Control Acknoweldege** ​
 
         - Implemented from scratch
-4. **RIC Control Request** ​
+6. **RIC Control Request** ​
 
         - Update the message to match E2SM RC v1.03
  
- 5. **RIC Subscription delete request/response**
+ 7. **RIC Subscription delete request/response**
       
       
         - Implemented from scratch
 
-6. **RIC Subscription modification response (In-Progress)**
+8. **RIC Subscription modification response (In-Progress)**
 
         - Implemented from scratch
-7. **RIC Subscription modification confirm (In-Progress)**
+9. **RIC Subscription modification confirm (In-Progress)**
 
         - Implemented from scratch
       
