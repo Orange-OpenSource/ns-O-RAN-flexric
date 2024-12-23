@@ -286,8 +286,9 @@ The handover xApp enables the initiation of control actions to make handover req
 1. First, you need to switch to [oie-ric-taap-xapps](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/oie-ric-taap-xapps?ref_type=heads) branch in Flexric reprocitory
 2. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
 3. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-three.cc'
-4. Navigate to '/path/to/flexric./build/examples/xApp/c/ctrl/xapp_rc_handover_ctrl ' .and then run './xapp_rc_handover_ctrl'.
-5. Use The RIC-TaaP Studio, following Section 6.4.3, Points 1,2,3,4 and 6 or Grafana dashboard to observe the handover operations.
+4. Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' and then run './xapp_rc_handover_ctrl'.
+5. To enable running xApp triggering from GUI, please copy two scripts from '/path/to/ns-3-mmwave-ora/GUI/FlexRIC xApp GUI trigger' to '/path/to/flexric" and then type "python3 xApp_trigger.py"
+6. Use The RIC-TaaP Studio, following Section 6.4.3, Points 1,2,3,4 and 6 or Grafana dashboard to observe the handover operations.
 The output of the handover operation is documented and can be reviewed in detail within this [document.](docs/handover_operation.pdf) .
 
 
@@ -303,7 +304,7 @@ The output of the handover operation is documented and can be reviewed in detail
 5. To see current KPIs, click 'Source Data'. 
  If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
-6. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap prameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric./build/examples/xApp/c/ctrl/xapp_rc_handover_ctrl ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
+6. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap prameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
 7. To stop simulation, click 'Stop' on 'Show Form' window.
 8. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
    
