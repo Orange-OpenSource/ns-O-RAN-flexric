@@ -36,43 +36,47 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
  
         - Edit the RAN Function IDs for KPM and RC ​
         - Reformat the size of the message to match FlexRIC (62 byte)​
-        - Update the KPM description and model to KPM v3 
-        - Upda​te the RC  description and model to RC v1.03
-        - Add RICReportstyle 4
-        - Add RICEventTrigger 
- 
- 2. **E2 Subscription Response** ​
+        - Update the KPM description and model to KPMv3 
+        - Upda​te the RC description and model to RCv1.03
+        - Add STYLE_4_RIC_SERVICE_REPORT 
+        - Add STYLE_1_RIC_EVENT_TRIGGER
+        - Add FORMAT_1_RIC_EVENT_TRIGGER
+
+ 2. **decoding of E2 Subscription Request**
+
+        - Add FORMAT_4_ACTION_DEFINITION decoding
+
+
+ 3. **E2 Subscription Response** ​
  
         - Add RAN Function NotAdmitted IE to the message​
 
- 3. **RIC Indication** ​
+ 4. **RIC Indication** ​
 
         - Update the message to match KPM v3.0​
         - Fill New RIC indication messages formats (Format 3)​
-
         
-4. **RIC Control Request** ​
-
-          - Add RIC style type 3 
+5. **RIC Control Request** ​
+   
+          - Update the message to match E2SM RCv1.03
+          - Add CONTROL Service Style 3 (Section 7.6)
           - Add Connected Mode Mobility Managament (Section 7.6.4)
           - Add Control Action ID 1 (Handover Control) (Section 8.4.4.1)
- 
-5. **RIC Control Acknoweldege** ​
+          - Add Control Action ID 2 (Conditional Handover Control) (Section 8.4.4.2)
+          - Add Control Action ID 3 (DAPS Handover Control) (Section 8.4.4.3)         
+
+6. **RIC Control Acknoweldege** ​
 
         - Implemented from scratch
-6. **RIC Control Request** ​
-
-        - Update the message to match E2SM RC v1.03
- 
- 7. **RIC Subscription delete request/response**
+7. **RIC Subscription delete request/response**
       
       
         - Implemented from scratch
 
-8. **RIC Subscription modification response (In-Progress)**
+8. **RIC Subscription modification response**
 
         - Implemented from scratch
-9. **RIC Subscription modification confirm (In-Progress)**
+9. **RIC Subscription modification confirm**
 
         - Implemented from scratch
       
@@ -82,15 +86,16 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 2. Update the RC ASN and model to RC v1.03
 
-### 4.3 Energy Saving (ES) xApp operation (ongoing)
+### 4.3 Energy Saving under Cell Utilization (ES) xApp operation 
 
 
 1. Support for Standardized ES xApp, specifically addressing **Use Case 21** and **Sub-use Case 4.21.3.1**: *Carrier and Cell Switch On/Off* in [O-RAN Use Cases Detailed Specification 15.0](https://specifications.o-ran.org/download?id=712).
 
 
-2. The operation sequence of the ES xApp is illustrated in the following diagram:
+2.The logic of the ES xApp is based of observing PRB usage for each cell. The operation sequence of the ES xApp is illustrated in the following diagram:
 
 ![ns-O-RAN](fig/9.png)
+
 
 
 ### 4.4 New ns-3 features
@@ -118,14 +123,11 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 ### 4.5 Graphical User Interface (GUI) for ns3
 
 1. Observe Cell/UEs KPIs
-
-3. Run simulation from GUI with selection of simulation parameters
-
-4. Stop simulation
-
+3. Run/Stop simulation from GUI with selection of simulation parameters
 5. Observe cell allocation and UEs positions
-
-6. Grafana platform deployed to observe simulation results (in-progress - users need to declare InfluxDB queries themselves)
+6. Energy Saving Dashboard (Observe QoS KPIs,Energy State and Energy Consumpetion before and after ES xApp execuation)
+7. A1 Policy Managment Dashboard (Set and Get for A1 Policies)
+9. Grafana platform deployed to observe simulation results
 
 ## 5. Requirments
 
@@ -260,7 +262,6 @@ Finally, run an example ns-3 scenario called `Scenario Zero` for testing purpose
     2. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-zero.cc'
     3. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc' and then run './xapp_kpm_rc'.
 
-
 And if everything goes as intended we should be able to see in order the following messages as shown in the Wireshark snapshot below:
 
 [![Watch the video](fig/5.png)](https://youtu.be/xD4TbgZ74wY)
@@ -275,25 +276,7 @@ And if everything goes as intended we should be able to see in order the followi
 8. RIC Subscription Delete Request (xApp to RIC to ns-O-RAN)
 9. RIC Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
 
-#### 6.4.2 Handover xApp operation
-
-The handover xApp enables the initiation of control actions to make handover requests with the following details:
-
-- The handover request is sent to the mmWave cell located in the middle of the scenario.(Note: The handover xApp is a component of the full ES xApp, where the source and target cells are determined based on the KPM indication. Refer to section 4.3 for more details.)
-- The Handover xApp initiates handover requests for all UEs associated with the mmWave cell co-located with the LTE node.
-- Each UE requires a separate control request.
-
-1. First, you need to switch to [oie-ric-taap-xapps](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/oie-ric-taap-xapps?ref_type=heads) branch in Flexric reprocitory
-2. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
-3. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-three.cc'
-4. Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' and then run './xapp_rc_handover_ctrl'.
-5. To enable running xApp triggering from GUI, please copy two scripts from '/path/to/ns-3-mmwave-ora/GUI/FlexRIC xApp GUI trigger' to '/path/to/flexric" and then type "python3 xApp_trigger.py"
-6. Use The RIC-TaaP Studio, following Section 6.4.3, Points 1,2,3,4 and 6 or Grafana dashboard to observe the handover operations.
-The output of the handover operation is documented and can be reviewed in detail within this [document.](docs/handover_operation.pdf) .
-
-
-
-#### 6.4.3 Run RIC-TaaP Studio
+#### 6.4.2 Run RIC-TaaP Studio
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
  It take up to 5 minutes to deploy portal, depends on HW.
@@ -312,7 +295,37 @@ The output of the handover operation is documented and can be reviewed in detail
 
 9. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
 
-#### 6.4.4 Observe KPIs with Grafana
+#### 6.4.3 Handover xApp operation
+
+The handover xApp enables the initiation of control actions to make handover requests with the following details:
+
+- The handover request is sent to the mmWave cell located in the middle of the scenario.(Note: The handover xApp is a component of the full ES xApp, where the source and target cells are determined based on the KPM indication. Refer to section 4.3 for more details.)
+- The Handover xApp initiates handover requests for all UEs associated with the mmWave cell co-located with the LTE node.
+- Each UE requires a separate control request.
+
+1. First, you need to switch to [oie-ric-taap-xapps](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/oie-ric-taap-xapps?ref_type=heads) branch in Flexric reprocitory
+2. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
+3. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-three.cc'
+4. Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' and then run './xapp_rc_handover_ctrl'.
+5. To enable running xApp triggering from GUI, please copy two scripts from '/path/to/ns-3-mmwave-ora/GUI/FlexRIC xApp GUI trigger' to '/path/to/flexric" and then type "python3 xApp_trigger.py"
+6. Use The RIC-TaaP Studio, following Section 6.4.3, Points 1,2,3,4 and 6 or Grafana dashboard to observe the handover operations.
+The output of the handover operation is documented and can be reviewed in detail within this [document.](docs/handover_operation.pdf) .
+
+#### 6.4.4 Energy Saving under Cell Utilization xApp operation
+
+The ES xApp operation according section 4.3:
+
+1. First, you need to switch to [oie-ric-taap-xapps](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/oie-ric-taap-xapps?ref_type=heads) branch in Flexric reprocitory
+2. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
+3. Run the scenario from RIC-TaaP Studio and follows the listed parameters here.
+4. Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' and then run './xapp_energy_saving_with_CU'
+5. To enable running xApp triggering from GUI, please copy two scripts from '/path/to/ns-3-mmwave-ora/GUI/FlexRIC xApp GUI trigger' to '/path/to/flexric" and then type "python3 xApp_trigger.py"
+6. Use The RIC-TaaP Studio, Energy Saving dashboard to observe the xApp operation, QoS parameters and Energy Saving metric.
+The output of the ES xApp is documented and can be reviewed in detail within this [document.](docs/Energy saving usecases.pdf).
+
+![ns-O-RAN](fig/energy_saving_with_CU.jpeg)
+
+#### 6.4.5 Observe KPIs with Grafana
 1. Grafana is being deployed together with GUI through Docker Compose.<br />
 2. It can be accessed by typing 127.0.0.1:3000 or 'NS3_HOST':3000 in the browser. <br />
 3. Dashboards will be shared soon, for test proposes, you can use example query.
