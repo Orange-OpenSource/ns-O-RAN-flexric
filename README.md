@@ -5,18 +5,20 @@
 </a>
 </div>
 
-## Project Introduction
+## 1. Project Introduction
 
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with ns-O-RAN simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) and Mavenir.  The team updated the ns-O-RAN simulator to be a fully compliant with E2AP v1.01, KPM v3 and RC v1.03. This platform will pave the way to test the use-cases that need a rich LTE/5G simulator to be verified. What's more, we propose Graphical User Interface for ns3 which allows to run and observe simulations in user-friendly way. The original project of ns-O-RAN in 
-[OpenRAN-Gym](https://openrangym.com/tutorials/ns-o-ran).
+Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with [ns-O-RAN](https://openrangym.com/ran-frameworks/ns-o-ran) simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) at Northeastren university, university of padova and Mavenir, the ns-O-RAN simulator has been further enhanced by the OIE team.
 
-![alt text](fig/1.png)
+The team upgraded the simulator to achieve full compliance with E2AP v1.01, KPM v3, and RC v1.03 standards. This advanced platform will facilitate the validation of complex use cases that require a sophisticated LTE/5G simulation environment. Furthermore, we propose the development of a Graphical User Interface (GUI) for ns-3, enabling users to execute and observe simulations in an intuitive and user-friendly manner.
 
-## Project Explanation and Demo
+
+![alt text](fig/ns-o-ran-flexric.png)
+
+## 2. Project Explanation and Demo
 
 [![Watch the video](fig/5.png)](https://youtu.be/PgwKyk8b6K0)
 
-## Code Structure
+## 3. Code Structure
 
 The ns-O-RAN is composed by three main components, as shown in the figure below:
 
@@ -26,56 +28,84 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 
 ![ns-O-RAN](fig/2.png)
 
-## Main Updates
+## 4. Main Updates
 
-### The implemetation of the E2APv1.01 includes:
+### 4.1 The implemetation of the E2APv1.01 includes:
 
  1. **E2 Setup request**
  
         - Edit the RAN Function IDs for KPM and RC ​
         - Reformat the size of the message to match FlexRIC (62 byte)​
-        - Update the KPM description and model to KPM v3 
-        - Upda​te the RC  description and model to RC v1.03
-        - Add RIC styles 4 
- 
- 2. **E2 Subscription Response** ​
+        - Update the KPM description and model to KPMv3 
+        - Upda​te the RC description and model to RCv1.03
+        - Add STYLE_4_RIC_SERVICE_REPORT 
+        - Add STYLE_1_RIC_EVENT_TRIGGER
+        - Add FORMAT_1_RIC_EVENT_TRIGGER
+
+ 2. **decoding of E2 Subscription Request**
+
+        - Add FORMAT_4_ACTION_DEFINITION decoding
+
+
+ 3. **E2 Subscription Response** ​
  
         - Add RAN Function NotAdmitted IE to the message​
+
+ 4. **RIC Indication** ​
+
         - Update the message to match KPM v3.0​
-        - Fill New RIC indication messages formats (Format 3 )​
- 
-3. **RIC Control Acknoweldege** ​
+        - Fill New RIC indication messages formats (Format 3)​
+        
+5. **RIC Control Request** ​
+   
+          - Update the message to match E2SM RCv1.03
+          - Add CONTROL Service Style 3 (Section 7.6)
+          - Add Connected Mode Mobility Managament (Section 7.6.4)
+          - Add Control Action ID 1 (Handover Control) (Section 8.4.4.1)
+          - Add Control Action ID 2 (Conditional Handover Control) (Section 8.4.4.2)
+          - Add Control Action ID 3 (DAPS Handover Control) (Section 8.4.4.3)         
 
-          - Implemented from scratch
-4. **RIC Control Request** ​
+6. **RIC Control Acknoweldege** ​
 
-          - Update the message to match E2SM RC v1.03
- 
- 5. **RIC Subscription delete request/response**
+        - Implemented from scratch
+7. **RIC Subscription delete request/response**
       
       
         - Implemented from scratch
 
-6. **RIC Subscription modification response (In-Progress)**
+8. **RIC Subscription modification response**
 
         - Implemented from scratch
-7. **RIC Subscription modification confirm (In-Progress)**
+9. **RIC Subscription modification confirm**
 
         - Implemented from scratch
       
-### The implementation of KPM and RC
+### 4.2 The implementation of KPM and RC
 
 1. Update the KPM ASN and model to KPM v3.00
 
 2. Update the RC ASN and model to RC v1.03
 
-### New ns-3 features
+### 4.3 Energy Saving under Cell Utilization (ES) xApp operation 
+
+
+1. Support for Standardized ES xApp, specifically addressing **Use Case 21** and **Sub-use Case 4.21.3.1**: *Carrier and Cell Switch On/Off* in [O-RAN Use Cases Detailed Specification 15.0](https://specifications.o-ran.org/download?id=712).
+
+
+2.The logic of the ES xApp is based of observing PRB usage for each cell. The operation sequence of the ES xApp is illustrated in the following diagram:
+
+![ns-O-RAN](fig/9.png)
+
+
+
+### 4.4 New ns-3 features
 
 1. '--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)
    
 2. New scenario "scenario-zero-with_parallel_loging.cc" as example of use '--E2andLogging=(bool)'
 
-3. Cell deep-sleep implementation (In-Progress)
+3. Cell deep-sleep implementation 
+
 
 4. **New run flags:**
 
@@ -90,19 +120,16 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
   --IntersideDistanceCells=(double)
 ```
 
-### Graphical User Interface (GUI) for ns3
+### 4.5 Graphical User Interface (GUI) for ns3
 
 1. Observe Cell/UEs KPIs
-
-3. Run simulation from GUI with selection of simulation parameters
-
-4. Stop simulation
-
+3. Run/Stop simulation from GUI with selection of simulation parameters
 5. Observe cell allocation and UEs positions
+6. Energy Saving Dashboard (Observe QoS KPIs,Energy State and Energy Consumpetion before and after ES xApp execuation)
+7. A1 Policy Managment Dashboard (Set and Get for A1 Policies)
+9. Grafana platform deployed to observe simulation results
 
-6. Grafana platform deployed to observe simulation results (in-progress - users need to declare InfluxDB queries themselves)
-
-## Requirments
+## 5. Requirments
 
 First start with the installation of the prerequisites. In Ubuntu 20.04 LTS, these can be installed with:
 
@@ -117,13 +144,13 @@ sudo apt install python3.13 # (or ealier version, but 3.6+ required)
 ```
 For GUI, Docker Compose is needed, to install it please follow [docs.docker.com](https://docs.docker.com/compose/install/).
 
-## Installation Instructions
+## 6. Installation Instructions
 
 The prepation of enviroment for running testing examples can be done when 'near-RIC' is initialized, as sequence diagram is represented below:
 
 ![ns-O-RAN](fig/4.png)
 
-### 1. FlexRiC Installation Instructions
+### 6.1 FlexRiC Installation Instructions
 
 The ns-O-RAN-flexric project is utilizing the latest stable commit of FlexRIC in the **dev** branch. You **MUST** adhere to the installation and deployment guidelines outlined under commit number [5bca8030](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/5bca8030ec551c8d4499cf38357d13e6c98666d3) before use the simulator.
 
@@ -133,7 +160,7 @@ For the FlexRIC [installation instructions](https://gitlab.eurecom.fr/mosaic5g/f
 git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git && cd flexric
 ```
 ```
-git checkout dev && git checkout 5bca8030
+git checkout oie-ric-taap-xapps  && git checkout 6dddd683
 ```
 ```
 mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
@@ -143,7 +170,7 @@ Finally, to install the Service Models (SM) on your machine, use:
 sudo make install
 ```
 
-### 2. ns-O-RAN-flexric Installation Instructions
+### 6.2 ns-O-RAN-flexric Installation Instructions
 
 First you need to clone the project 
 
@@ -159,6 +186,18 @@ If you made a clone before and there are new updates so you need to make recursi
 ```
 git pull --recurse-submodules https://github.com/Orange-OpenSource/ns-O-RAN-flexric
 ```
+When checkout to any branch, to ensure you assiocated submodule branch 
+
+```
+git config --global submodule.recurse true
+git checkout <branch_name>
+```
+or 
+
+```
+git checkout <branch_name>   && git submodule update --init --recursive
+```
+
 
 To set up the environment for ORAN E2 simulator, navigate to the `/e2sim-kpmv3/e2sim` directory. Create a new directory named build. Then execute the script `build_e2sim.sh` with the argument `3` to enable LOG_LEVEL (DEBUG). This is useful to debug the exchange of the messages between the ns-3 and the RIC, but also there are a different debug levels that can be setup. These levels are summarized in the table below.
 
@@ -212,7 +251,7 @@ At this step the software in place to configure and build ns-3:
 ./waf configure
 ./waf build
 ```
-### 3. GUI deployment
+### 6.3 GUI deployment
 
 ```
 cd ns-3-mmwave-oran/GUI
@@ -222,10 +261,10 @@ pip3 install influxdb
 ```
 
 
-### Usage/deployment 
+### 6.4 Usage/deployment 
 
 
-#### Scenario Zero
+#### 6.4.1 Scenario Zero
 Finally, run an example ns-3 scenario called `Scenario Zero` for testing purpose. This scenario features a Non-StandAlone (NSA) 5G setup in which, its have one LTE eNB positioned in the center of the scenario and four gNBs around it with an inter site distance of 1000 between the eNB and each gNB. You can run the scenario after done the following steps first:
 
 1. First you must be done the installation instructions for the flexric mentiond in the above section 'FlexRiC Installation Instructions'
@@ -234,7 +273,6 @@ Finally, run an example ns-3 scenario called `Scenario Zero` for testing purpose
     1. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
     2. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-zero.cc'
     3. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc' and then run './xapp_kpm_rc'.
-
 
 And if everything goes as intended we should be able to see in order the following messages as shown in the Wireshark snapshot below:
 
@@ -250,40 +288,69 @@ And if everything goes as intended we should be able to see in order the followi
 8. RIC Subscription Delete Request (xApp to RIC to ns-O-RAN)
 9. RIC Subscription Delete Response (ns-O-RAN to xApp through E2 Term on RIC)
 
-#### Run RIC-TaaP Studio
+#### 6.4.2 Run RIC-TaaP Studio
 1. First you need to run script 'python3 gui_trigger.py' in 'ns-3-mmwave-oran' folder, which will be responsible to push ns3 KPIs to database
 2. In your browser, type 127.0.0.1:8000 or 'NS3_HOST':8000 (e.g 127.0.0.1:8000).<br />
  It take up to 5 minutes to deploy portal, depends on HW.
-3. Click on webpage 'Show form', choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
+3. Connect to FlexRic by run Flexric in the bachground and mark on webpage 'Connect to FlexRIC'
+4. Click on webpage 'Show form',choose run flags values and click 'Start', you should see Cells and UEs on grid shortly. <br />
  GUI will run 'scenario-zero-with_parallel_loging.cc' with user defined run flags. <br />
  Runtime logs from ns-3 will be saved in 'ns-3-mmwave-oran/ns3_run.log' file.
-4. To see current KPIs, click 'Source Data'. 
+5. To see current KPIs, click 'Source Data'. 
  If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
-5. To stop simulation, click 'Stop' on 'Show Form' window.
-6. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
+6. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap prameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
+7. To stop simulation, click 'Stop' on 'Show Form' window.
+8. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
    
  ![ns-O-RAN](fig/6.png)
 
-7. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
+9. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
 
-#### Observe KPIs with Grafana
+#### 6.4.3 Handover xApp operation
+
+The handover xApp enables the initiation of control actions to make handover requests with the following details:
+
+- The handover request is sent to the mmWave cell located in the middle of the scenario.(Note: The handover xApp is a component of the full ES xApp, where the source and target cells are determined based on the KPM indication. Refer to section 4.3 for more details.)
+- The Handover xApp initiates handover requests for all UEs associated with the mmWave cell co-located with the LTE node.
+- Each UE requires a separate control request.
+
+1. First, you need to switch to [oie-ric-taap-xapps](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/oie-ric-taap-xapps?ref_type=heads) branch in Flexric reprocitory
+2. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
+3. Navigate to '/path/to/ns-3-mmwave-oran'  and then run './waf --run scratch/scenario-three.cc'
+4. Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' and then run './xapp_rc_handover_ctrl'.
+5. To enable running xApp triggering from GUI, please copy two scripts from '/path/to/ns-3-mmwave-ora/GUI/FlexRIC xApp GUI trigger' to '/path/to/flexric" and then type "python3 xApp_trigger.py"
+6. Use The RIC-TaaP Studio, following Section 6.4.3, Points 1,2,3,4 and 6 or Grafana dashboard to observe the handover operations.
+The output of the handover operation is documented and can be reviewed in detail within this [document.](docs/handover_operation.pdf) .
+
+#### 6.4.4 Energy Saving under Cell Utilization xApp operation
+
+The ES xApp operation according section 4.3:
+
+1. First, you need to switch to [oie-ric-taap-xapps](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/oie-ric-taap-xapps?ref_type=heads) branch in Flexric reprocitory
+2. Navigate to '/path/to/flexric/build/examples/ric/' and then run './nearRT-RIC'.
+3. Run the scenario from RIC-TaaP Studio and follows the listed parameters here.
+4. Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' and then run './xapp_energy_saving_with_CU'
+5. To enable running xApp triggering from GUI, please copy two scripts from '/path/to/ns-3-mmwave-ora/GUI/FlexRIC xApp GUI trigger' to '/path/to/flexric" and then type "python3 xApp_trigger.py"
+6. Use The RIC-TaaP Studio, Energy Saving dashboard to observe the xApp operation, QoS parameters and Energy Saving metric.
+The output of the ES xApp is documented and can be reviewed in detail within this [document.](docs/Energy_saving_usecases.pdf)
+
+![ns-O-RAN](fig/energy_saving_with_CU.jpeg)
+
+#### 6.4.5 Observe KPIs with Grafana
 1. Grafana is being deployed together with GUI through Docker Compose.<br />
 2. It can be accessed by typing 127.0.0.1:3000 or 'NS3_HOST':3000 in the browser. <br />
-3. Dashboards will be shared soon, for test proposes, you can use example query.
-4. Click '+' button and choose 'Create Dashboard'.
-5. Click 'Add an empty panel'.
-6. Click pencil button at the right side of 'FROM' in query builider.
-7. Type: 'SELECT ("value") FROM "du-cell-2_drb.meanactiveuedl" WHERE $timeFilter'.
-8. Click 'Apply'.
-7. Remember to set correct 'Absolute time range' in right corner of Grafana to choose time period when desired simulation started.
-8. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
+3. Choose 'Dashboards' on the left sidebar and then click 'Manage'. <br />
+4. Here you can choose 'per_Cell_stats' or 'per_UE_stats'. <br />
+5. Remember to set correctly observation time period in the right corner of the Grafana. <br />
+6. You can also set auto-refresh in the right corner of the Grafana. <br />
+6. List of all available KPIs that can be get with query can be found in '/docs/Grafana KPIs'.
 
  ![ns-O-RAN](fig/7.png)
 
-## Further Resources
+## 7. Further Resources
 
-### Participation in 10th OpenAirInterface Anniversaray Workshop
+### 7.1 Participation in 10th OpenAirInterface Anniversaray Workshop
 
 
 - **[RIC Testing as a Platform Demo Architecure ](fig/8.png)**: Full Architecture
@@ -293,7 +360,7 @@ And if everything goes as intended we should be able to see in order the followi
 - **[KPM-RC xApp Demo](https://www.youtube.com/watch?v=xD4TbgZ74wY)**: YouTube Link 
 
 
-## Contributers
+## 7. Contributers
 
 - [Mina Yonan](https://www.linkedin.com/in/mina-yonan-0989b8b9/), Orange Innovation Egypt, mina.awadallah@orange.com
 - [Mostafa Ashraf](https://www.linkedin.com/in/mostafa-ashraf-a62807142/), Orange Innovation Egypt, mostafa.ashraf.ext@orange.com
@@ -301,8 +368,10 @@ And if everything goes as intended we should be able to see in order the followi
 - [Adrian Oziębło](https://www.linkedin.com/in/adrian-ozi%C4%99b%C5%82o-233a32205/), Orange Innovation Poland, adrian.ozieblo@orange.com
 - [Abdelrhman Soliman](https://www.linkedin.com/in/abdelrahman-khaled-anwer), Orange Innovation Egypt, abdelrhman.soliman.ext@orange.com
 - [Aya Kamal](http://linkedin.com/in/aya-kamal-elbakly), Orange Innovation Egypt, aya.kamal.ext@orange.com
+- [Bartosz Rak](https://www.linkedin.com/in/bartosz-rak-telco/), Orange Innovation Poland, bartosz.rak@orange.com
 
-## Liscence
+
+## 8. Liscence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.txt)
 
 
