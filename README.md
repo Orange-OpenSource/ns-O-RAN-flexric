@@ -6,11 +6,13 @@
 </div>
 
 ## 1. Project Introduction
-
-Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with [ns-O-RAN](https://openrangym.com/ran-frameworks/ns-o-ran) simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) at Northeastren university, university of padova and Mavenir, the ns-O-RAN simulator has been further enhanced by the OIE team.
+ 
+ RIC Testing as a Platform (RIC-TaaP)—an open source initiative designed to streamline xApp/rApp functional and operational testing, fostering innovation in xApp/rApp design and provide a proven digital-twin networks.
+Recognizing the need for a robust, fully open source testing environment, Orange Innovation Egypt (OIE) has focused on enabling system-level use cases by leveraging advanced open source components. To achieve this, OIE has integrated FlexRIC from EURECOM with the [ns-O-RAN](https://openrangym.com/ran-frameworks/ns-o-ran) simulator, originally developed by the Institute for the Wireless Internet of Things (WIoT) ,University of Padova and Mavenir and [5G-LENA](https://5g-lena.cttc.es/) module, developed by the [OpenSim](https://www.cttc.cat/open-simulations-opensim/) Research Unit at the [Centre Tecnològic de Telecomunicacions de Catalunya (CTTC)](https://www.cttc.cat/). The team has enhanced the both simulators to ensure full compliance with E2AP v1.01, KPM v3.00, and RC v1.03 standards, providing a sophisticated 5G simulation environment for validating complex use cases.
 
 The team upgraded the simulator to achieve full compliance with E2AP v1.01, KPM v3, and RC v1.03 standards. This advanced platform will facilitate the validation of complex use cases that require a sophisticated LTE/5G simulation environment. Furthermore, we propose the development of a Graphical User Interface (GUI) for ns-3, enabling users to execute and observe simulations in an intuitive and user-friendly manner.
 
+Additionally,Orange Innovation Poland (OIP) has augmented the platform with a user-friendly dashboard, RIC-TaaP Studio, enabling intuitive test scenario design and incorporating a range of operational features. 
 
 ![alt text](fig/ns-o-ran-flexric.png)
 
@@ -25,6 +27,7 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 - The [e2sim](https://github.com/wineslab/ns-o-ran-e2-sim) software, which was originally developed by the OSC community. 
 - The [ns3-mmWave](https://github.com/wineslab/ns-o-ran-ns3-mmwave) version, which was originally developed by the University of Padova and NYU.
 - The [ns-O-RAN](https://github.com/o-ran-sc/sim-ns3-o-ran-e2) module, developed by Northeastern University and Mavenir, which is basically an external module that can be plugged in ns-3 and uses the e2sim to create a SCTP connection with the RIC.
+- The [5G-LENA NR module](https://gitlab.com/cttc-lena/nr) that covers the SU-MIMO and Enhanced PHY/MAC layer capabilities.
 
 ![ns-O-RAN](fig/2.png)
 
