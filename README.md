@@ -202,7 +202,7 @@ git checkout <branch_name>   && git submodule update --init --recursive
 To set up the environment for ORAN E2 simulator, navigate to the `/e2sim-kpmv3/e2sim` directory. Create a new directory named build. Then execute the script `build_e2sim.sh` with the argument `3` to enable LOG_LEVEL (DEBUG). This is useful to debug the exchange of the messages between the ns-3 and the RIC, but also there are a different debug levels that can be setup. These levels are summarized in the table below.
 
 ```
-cd /e2sim-kpmv3/e2sim/
+cd e2sim-kpmv3/e2sim/
 mkdir build
 sudo ./build_e2sim.sh 3
 ```
