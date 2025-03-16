@@ -9,7 +9,7 @@
 
 Given the importance of obtaining a capable and fully open-source platform for xApp operation testing,  especially for the complex use-cases. Orange Innovation Egypt(OIE) team Successfully integrated FlexRIC from EURECOM with [ns-O-RAN](https://openrangym.com/ran-frameworks/ns-o-ran) simulator that originally developed by the institute for the Wireless Internet of Things (WIoT) at Northeastren university, university of padova and Mavenir, the ns-O-RAN simulator has been further enhanced by the OIE team.
 
-The team upgraded the simulator to achieve full compliance with E2AP v1.01, KPM v3, and RC v1.03 standards. This advanced platform will facilitate the validation of complex use cases that require a sophisticated LTE/5G simulation environment. Furthermore, we propose the development of a Graphical User Interface (GUI) for ns-3, enabling users to execute and observe simulations in an intuitive and user-friendly manner.
+The team upgraded the simulator to achieve full compliance with E2AP v1.01, KPM v3, and RC v1.03 standards. This advanced platform will facilitate the validation of complex use cases that require a sophisticated LTE/5G simulation environment.  Furthermore, Orange Innovation Poland (OIP) has augmented the platform with a user-friendly dashboard, RIC-TaaP Studio, enabling intuitive test scenario design and incorporating a range of operational features.The development of a Graphical User Interface (GUI) for ns-3, enabling users to execute and observe simulations in an intuitive and user-friendly manner.
 
 
 ![alt text](fig/ns-o-ran-flexric.png)
@@ -92,7 +92,12 @@ The ns-O-RAN is composed by three main components, as shown in the figure below:
 1. Support for Standardized ES xApp, specifically addressing **Use Case 21** and **Sub-use Case 4.21.3.1**: *Carrier and Cell Switch On/Off* in [O-RAN Use Cases Detailed Specification 15.0](https://specifications.o-ran.org/download?id=712).
 
 
-2.The logic of the ES xApp is based of observing PRB usage for each cell. The operation sequence of the ES xApp is illustrated in the following diagram:
+2. The logic of the ES xApp is based of observing PRB usage for each cell. The operation sequence of the ES xApp is illustrated in the following diagram: 
+
+3. **Demo Video**  
+   - Watch the demonstration: [View Video](https://drive.google.com/file/d/1HXBneBTRJAm7YqOa93W8S-4iusO2KCNs/view?usp=drive_link).  
+
+
 
 ![ns-O-RAN](fig/9.png)
 
@@ -138,7 +143,8 @@ sudo apt-get update
 # Requirements for e2sim
 sudo apt-get install -y build-essential git cmake libsctp-dev autoconf automake libtool bison flex libboost-all-dev 
 # Requirements for ns-3
-sudo apt-get install g++
+# Ensure that your system has **GCC 13 or higher** installed before proceeding.  
+sudo apt-get install g++  # Requires GCC version 13 or later
 sudo apt install python3.13 # (or ealier version, but 3.6+ required)
 
 ```
@@ -160,7 +166,7 @@ For the FlexRIC [installation instructions](https://gitlab.eurecom.fr/mosaic5g/f
 git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git && cd flexric
 ```
 ```
-git checkout oie-ric-taap-xapps  && git checkout 6dddd683
+git checkout oie-ric-taap-xapps
 ```
 ```
 mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
@@ -188,18 +194,21 @@ git pull --recurse-submodules https://github.com/Orange-OpenSource/ns-O-RAN-flex
 ```
 When checkout to any branch, to ensure you assiocated submodule branch 
 
-```
-git config --global submodule.recurse true
-git checkout <branch_name>
-```
-or 
 
 ```
 git checkout <branch_name>   && git submodule update --init --recursive
 ```
 
+or 
 
-To set up the environment for ORAN E2 simulator, navigate to the `/e2sim-kpmv3/e2sim` directory. Create a new directory named build. Then execute the script `build_e2sim.sh` with the argument `3` to enable LOG_LEVEL (DEBUG). This is useful to debug the exchange of the messages between the ns-3 and the RIC, but also there are a different debug levels that can be setup. These levels are summarized in the table below.
+```
+git config --global submodule.recurse true
+git checkout <branch_name>
+```
+
+
+
+To set up the environment for ORAN E2 simulator, navigate to the `e2sim-kpmv3/e2sim` directory. Create a new directory named build. Then execute the script `build_e2sim.sh` with the argument `3` to enable LOG_LEVEL (DEBUG). This is useful to debug the exchange of the messages between the ns-3 and the RIC, but also there are a different debug levels that can be setup. These levels are summarized in the table below.
 
 ```
 cd e2sim-kpmv3/e2sim/
