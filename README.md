@@ -378,7 +378,7 @@ The output of the ES xApp is documented and can be reviewed in detail within thi
 - [Abdelrhman Soliman](https://www.linkedin.com/in/abdelrahman-khaled-anwer), Orange Innovation Egypt, abdelrhman.soliman.ext@orange.com
 - [Aya Kamal](http://linkedin.com/in/aya-kamal-elbakly), Orange Innovation Egypt, aya.kamal.ext@orange.com
 - [Bartosz Rak](https://www.linkedin.com/in/bartosz-rak-telco/), Orange Innovation Poland, bartosz.rak@orange.com
-- Andrzej Denisiewicz, Orange Innovation Poland,, andrzej.denisiewicz@orange.com
+- Andrzej Denisiewicz, Orange Innovation Poland, andrzej.denisiewicz@orange.com
 
 
 ## 8. Liscence
