@@ -3,7 +3,7 @@
 # Trigger : workflow_dispatch  (triggered manually from the GitHub Actions UI)
 # Runner  : ubuntu-latest (Ubuntu 24.04)
 
-name: ns-O-RAN-flexric CI
+name: ns-O-RAN-flexric CI Pipeline 2
 
 on:
   workflow_dispatch:
@@ -217,6 +217,28 @@ jobs:
           echo "mmwave-LENA-oran contents:"
           ls mmwave-LENA-oran/
 
+      - name: Ensure oran-interface is populated
+        run: |
+          ORAN_DIR="mmwave-LENA-oran/contrib/oran-interface"
+          if [ -z "$(ls -A "$ORAN_DIR" 2>/dev/null)" ]; then
+            echo "oran-interface is empty. cloning it from GitHub..."
+            rm -rf "$ORAN_DIR"
+            git clone https://github.com/MinaYonan123/oran-interface.git "$ORAN_DIR"
+          else
+            echo "oran-interface already populated – skipping clone."
+          fi
+
+      - name: Ensure src/nr is populated
+        run: |
+          NR_DIR="mmwave-LENA-oran/src/nr"
+          if [ -z "$(ls -A "$NR_DIR" 2>/dev/null)" ]; then
+            echo "src/nr is empty. cloning it from GitHub..."
+            rm -rf "$NR_DIR"
+            git clone https://github.com/MinaYonan123/ns3-oran-lena-nr.git "$NR_DIR"
+          else
+            echo "src/nr already populated – skipping clone."
+          fi
+
       - name: Install system build dependencies
         run: |
           sudo apt-get update
@@ -242,6 +264,11 @@ jobs:
         with:
           name: e2sim-build
           path: e2sim-kpmv3/
+
+      - name: Install e2sim from downloaded artifact
+        run: |
+          sudo dpkg --install e2sim-kpmv3/e2sim/build/e2sim-dev_1.0.0_amd64.deb
+          sudo ldconfig
 
       - name: Download FlexRIC installed files artifact
         uses: actions/download-artifact@v4
