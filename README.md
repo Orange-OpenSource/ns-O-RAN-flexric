@@ -209,8 +209,7 @@ sudo apt-get install -y libeigen3-dev
 # Follow instructions at: https://docs.docker.com/compose/install/
 
 
-### Note :
-for ubuntu 24.04 users or even future releases it is advised to use a virutal environment for downloading python 3.8 as it breaks
+# Note :for ubuntu 24.04 users or even future releases it is advised to use a virutal environment for downloading python 3.8 as it breaks
 the system so to do so 
 
 sudo add-apt-repository ppa:deadsnakes/ppa
@@ -219,16 +218,6 @@ sudo apt install python3.8 python3.8-venv python3.8-dev
 
 python3.8 -m venv myenv
 source myenv/bin/activate
-
-
-make sure to put this environemnt folder to be seen by the flexric and ns-oran-flexric like this 
-
-folder
-    -- ns-oran-flexeic
-    -- flexric
-    -- myvenv
-
-make sure to activate the environment in all the terminals 
 ```
 The prepation of enviroment for running testing examples can be done when 'near-RIC' is initialized, as sequence diagram is represented below:
 
