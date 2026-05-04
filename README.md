@@ -209,8 +209,7 @@ sudo apt-get install -y libeigen3-dev
 # Follow instructions at: https://docs.docker.com/compose/install/
 
 
-# Note :for ubuntu 24.04 users or even future releases it is advised to use a virutal environment for downloading python 3.8 as it breaks
-the system so to do so 
+# Note: for ubuntu 24.04 users or even future releases it is advised to use a virutal environment for downloading python 3.8 as it breaks the system so to do so 
 
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
