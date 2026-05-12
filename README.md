@@ -105,11 +105,13 @@ The Figure below describes the contribution of OIE over ns-O-RAN project.
 
         - Implemented from scratch
       
-### 4.2 The implementation of KPM and RC
+### 4.2 The implementation of KPM, RC and CCC SM
 
 1. Update the KPM ASN and model to KPM v3.00
 
 2. Update the RC ASN and model to RC v1.03
+
+3. Add CCC service model v06.00
 
 ### 4.3 Energy Saving under Cell Utilization (ES) xApp operation 
 
@@ -134,8 +136,11 @@ The Figure below describes the contribution of OIE over ns-O-RAN project.
 
 3. Cell deep-sleep implementation 
 
+4. RF Reconfiguration Scenario to Support the Energy-Saving Use Case.
 
-4. **New run flags:**
+5. Add CCC servic model and its handler functions.
+
+6. **New run flags:**
 
 ```
   --KPM_E2functionID=(double)
@@ -154,6 +159,7 @@ The Figure below describes the contribution of OIE over ns-O-RAN project.
 3. Run/Stop simulation from GUI with selection of simulation parameters
 5. Observe cell allocation and UEs positions
 6. Energy Saving Dashboard (Observe QoS KPIs,Energy State and Energy Consumpetion before and after ES xApp execuation)
+7. RF channel Reconfiguration Dashboard ( Observe UE Dl throughput , network avgPower, indication message conntent, Control message conntent and Power and Energy Consuption)
 7. A1 Policy Managment Dashboard (Set and Get for A1 Policies)
 9. Grafana platform deployed to observe simulation results
 
@@ -437,7 +443,18 @@ To run kpm-rc xApp with 5G-LENA module
 5. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc ' and then run './xapp_kpm_rc'.
 6. To enable running xApp triggering from GUI, please copy two scripts from '/path/to/mmwave-LENA-oran/GUI/FlexRIC xApp GUI trigger' to '/path/to/flexric" and then type "python3 xApp_trigger.py"
 
-#### 6.4.6 Observe KPIs with Grafana
+#### 6.4.6 RF Channel Reconfiguration xApp operation.
+To run RF channel REcnfiguration xApp with 5G-Lena module 
+
+1. Switch to flexric [OIE-add-CCC](https://gitlab.eurecom.fr/mosaic5g/flexric.git) branch .
+2. run './nearRT-RIC' following step 2 in 6.4.5 .
+3. Use The RIC-TaaP Studio, following Section 6.4.3, Points 1,2,3 and 4.
+4. Run the ***RF_Reconfiguration.cc*** scenario from RIC-TaaP Studio.
+5. Navigate to '/path/to/flexric/build/examples/xApp/c/orange' and then run './rf_reconfiguration_xapp' .
+6. you can monitor the RF channel reconfiguration KPIs from observe channel reconfiguration tab .
+![ns-O-RAN](fig/10.png)
+
+#### 6.4.7 Observe KPIs with Grafana
 1. Grafana is being deployed together with GUI through Docker Compose.<br />
 2. It can be accessed by typing 127.0.0.1:3000 or 'NS3_HOST':3000 in the browser. <br />
 3. Default user/password: admin/admin
