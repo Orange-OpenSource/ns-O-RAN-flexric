@@ -1,9 +1,4 @@
-# ─────────────────────────────────────────────────────────────────────────────
-# ns-O-RAN-flexric  –  CI/CD Pipeline
-# Trigger : workflow_dispatch  (triggered manually from the GitHub Actions UI)
-# Runner  : ubuntu-latest (Ubuntu 24.04)
-
-name: ns-O-RAN-flexric CI Pipeline 2
+name: ns-O-RAN-flexric Consolidated CI Pipeline
 
 on:
   workflow_dispatch:
@@ -13,210 +8,93 @@ on:
       - main
 
 jobs:
-
-  install-deps:
-    name: "Install Base Dependencies"
+  build-and-test-all:
+    name: "Complete ns-O-RAN Build"
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Update package list and install all required dependencies
-        run: |
-          sudo apt-get update
-
-          # ── E2SIM requirements ───────────────────────────────────────────
-          sudo apt-get install -y \
-            build-essential \
-            git \
-            cmake \
-            libsctp-dev \
-            autoconf \
-            automake \
-            libtool \
-            bison \
-            flex \
-            libboost-all-dev
-
-          # ── ns-3 requirements ────────────────────────────────────────────
-          # Note: the package name on Ubuntu is g++-13, not g++13.
-          sudo apt-get install -y \
-            g++-13 \
-            python3.8 \
-            libc6-dev
-
-          # ── Optional: SQLite (LENA comparison examples) ──────────────────
-          sudo apt-get install -y sqlite3 libsqlite3-dev
-
-          # ── Optional: Eigen3 (MIMO features) ────────────────────────────
-          sudo apt-get install -y libeigen3-dev
-
-  # ───────────────────────────────────────────────────────────────────────────
-  # JOB 1 – E2SIM
-  # ───────────────────────────────────────────────────────────────────────────
-
-  test-e2sim:
-    name: "E2SIM Build"
-    runs-on: ubuntu-latest
-    needs: [install-deps]  
-
-    steps:
-
+      # ───────────────────────────────────────────────────────────────────────────
+      # 1. SYSTEM PREREQUISITES & ENVIRONMENT SETUP
+      # ───────────────────────────────────────────────────────────────────────────
       - name: Checkout repository with submodules
         uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Install E2SIM build dependencies
+      - name: Install System Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            build-essential git cmake \
-            libsctp-dev autoconf automake libtool \
-            bison flex libboost-all-dev g++
+            build-essential git libsctp-dev libssl-dev \
+            autoconf automake libtool bison flex libboost-all-dev \
+            cmake-curses-gui libpcre2-dev python3-dev \
+            libconfig-dev libconfig++-dev sqlite3 libsqlite3-dev \
+            libeigen3-dev ca-certificates gpg wget m4
 
-      - name: Set up Python 3.13
+      - name: Setup CMake 4.2.1
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '4.2.1'
+
+      - name: Set up Python 3.8
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.8"
 
-      - name: Create build directory
-        working-directory: e2sim-kpmv3/e2sim
-        run: mkdir -p build
-
-      - name: Build E2SIM
-        working-directory: e2sim-kpmv3/e2sim
-        run: sudo ./build_e2sim.sh 3
-
-      - name: Upload e2sim build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2sim-build
-          path: e2sim-kpmv3/
-          retention-days: 1
-
-  # ───────────────────────────────────────────────────────────────────────────
-  # JOB 2 – FlexRIC
-  # ───────────────────────────────────────────────────────────────────────────
-  test-flexric:
-    name: "FlexRIC Build & Install"
-    runs-on: ubuntu-latest
-    needs: [install-deps]  
-
-    steps:
-
-      - name: Install base apt prerequisites
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            build-essential git \
-            libsctp-dev libssl-dev \
-            cmake-curses-gui libpcre2-dev \
-            python3-dev python3.8 \
-            libconfig-dev libconfig++-dev \
-            autoconf automake libtool
-
-      - name: Install CMake ≥ 3.22 (Kitware APT repo)
-        run: |
-          sudo apt-get install -y ca-certificates gpg wget
-          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc \
-            | gpg --dearmor - \
-            | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg > /dev/null
-          echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] \
-          https://apt.kitware.com/ubuntu/ $(lsb_release -cs) main" \
-            | sudo tee /etc/apt/sources.list.d/kitware.list
-          sudo apt-get update
-          sudo apt-get install -y cmake
-          cmake --version
-
-      - name: Install SWIG 4.1 
-        run: |
-          git clone https://github.com/swig/swig.git
-          cd swig
-          git checkout release-4.1
-          ./autogen.sh
-          ./configure --prefix=/usr/
-          make -j$(nproc)
-          sudo make install
-          swig -version
-
-      - name: Install GCC-13 and set as default compiler
+      - name: Install GCC-13 and set as default
         run: |
           sudo apt-get install -y gcc-13 g++-13
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 130
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 130
-          gcc --version
-          g++ --version
+
+      # ───────────────────────────────────────────────────────────────────────────
+      # 2. BUILD E2SIM
+      # ───────────────────────────────────────────────────────────────────────────
+      - name: Build and Install E2SIM
+        working-directory: e2sim-kpmv3/e2sim
+        run: |
+          mkdir -p build
+          sudo ./build_e2sim.sh 3
+          # THIS PART IS CRITICAL:
+          sudo dpkg --install build/e2sim-dev_1.0.0_amd64.deb
+          sudo ldconfig
+
+      # ───────────────────────────────────────────────────────────────────────────
+      # 3. BUILD & INSTALL FLEXRIC TOOLS (SWIG, ASN1C)
+      # ───────────────────────────────────────────────────────────────────────────
+      - name: Install SWIG 4.1 
+        run: |
+          git clone https://github.com/swig/swig.git
+          cd swig && git checkout release-4.1
+          ./autogen.sh && ./configure --prefix=/usr/
+          make -j$(nproc) && sudo make install
 
       - name: Install asn1c 
         run: |
-          sudo apt-get remove -y asn1c || true
-          sudo apt-get install -y git autoconf automake libtool make gcc g++ m4
           sudo git clone https://github.com/mouse07410/asn1c /tmp/asn1c
           cd /tmp/asn1c
           sudo git checkout 940dd5fa9f3917913fd487b13dfddfacd0ded06e
-          sudo autoreconf -iv
-          sudo ./configure --prefix=/opt/asn1c
-          sudo make -j$(nproc)
-          sudo make install
-          sudo rm -rf /tmp/asn1c
+          sudo autoreconf -iv && sudo ./configure --prefix=/opt/asn1c
+          sudo make -j$(nproc) && sudo make install
           echo "/opt/asn1c/bin" >> "$GITHUB_PATH"
-          /opt/asn1c/bin/asn1c -version
 
-
-      - name: Clone FlexRIC
+      # ───────────────────────────────────────────────────────────────────────────
+      # 4. BUILD & INSTALL FLEXRIC
+      # ───────────────────────────────────────────────────────────────────────────
+      - name: Clone and Build FlexRIC
         run: |
           git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
           cd flexric
-          git checkout dev
           git checkout d3dc645b4
-
-
-      - name: Configure FlexRIC (E2AP_V1 / KPM_V3_00)
-        working-directory: flexric
-        run: |
-          mkdir build
-          cd build
-          cmake .. \
-            -DE2AP_VERSION=E2AP_V1 \
-            -DKPM_VERSION=KPM_V3_00
-
-      - name: Build FlexRIC
-        working-directory: flexric/build
-        run: make -j8
-
-      - name: Install FlexRIC Service Models and package for artifact
-        working-directory: flexric/build
-        run: |
+          mkdir build && cd build
+          cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00
+          make -j$(nproc)
           sudo make install
-          sudo make DESTDIR=/tmp/flexric-install install
-          tar czf /tmp/flexric-installed.tar.gz -C /tmp/flexric-install .
+          sudo ldconfig
 
-      - name: Upload FlexRIC installed files artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: flexric-install
-          path: /tmp/flexric-installed.tar.gz
-          retention-days: 1
-
-  # ───────────────────────────────────────────────────────────────────────────
-  # JOB 3 – ns-3 
-  # ───────────────────────────────────────────────────────────────────────────
-  test-ns3:
-    name: "ns-3 mmWave Build"
-    runs-on: ubuntu-latest
-    needs: [test-e2sim, test-flexric]  
-
-    steps:
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Initialise mmwave-LENA-oran submodule
-        run: |
-          git submodule init
-          git submodule update --recursive -- mmwave-LENA-oran
-          echo "mmwave-LENA-oran contents:"
-          ls mmwave-LENA-oran/
-
+      # ───────────────────────────────────────────────────────────────────────────
+      # 5. CONFIGURE & BUILD NS-3
+      # ───────────────────────────────────────────────────────────────────────────
       - name: Ensure oran-interface is populated
         run: |
           ORAN_DIR="mmwave-LENA-oran/contrib/oran-interface"
@@ -231,60 +109,58 @@ jobs:
       - name: Ensure src/nr is populated
         run: |
           NR_DIR="mmwave-LENA-oran/src/nr"
-          if [ -z "$(ls -A "$NR_DIR" 2>/dev/null)" ]; then
-            echo "src/nr is empty. cloning it from GitHub..."
+          if [ ! -f "$NR_DIR/CMakeLists.txt" ]; then
+            echo "src/nr missing CMakeLists.txt – cloning ns3-oran-lena-nr and checking out Lena_oran..."
             rm -rf "$NR_DIR"
-            git clone https://github.com/MinaYonan123/ns3-oran-lena-nr.git "$NR_DIR"
+            git clone https://github.com/MinaYonan123/ns3-oran-lena-nr.git mmwave-LENA-oran/src/nr
+            cd mmwave-LENA-oran/src/nr
+            git checkout Lena_oran
           else
             echo "src/nr already populated – skipping clone."
           fi
 
-      - name: Install system build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            build-essential git cmake \
-            libsctp-dev libssl-dev \
-            libpcre2-dev \
-            python3-dev python3.8 \
-            libconfig-dev libconfig++-dev
-
-      - name: Install GCC-13 and set as default compiler
-        run: |
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 130
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 130
-
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-
-      - name: Download e2sim build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: e2sim-build
-          path: e2sim-kpmv3/
-
-      - name: Install e2sim from downloaded artifact
-        run: |
-          sudo dpkg --install e2sim-kpmv3/e2sim/build/e2sim-dev_1.0.0_amd64.deb
-          sudo ldconfig
-
-      - name: Download FlexRIC installed files artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: flexric-install
-          path: ${{ github.workspace }}
-
-      - name: Restore FlexRIC installed files to system paths
-        run: |
-          sudo tar xzf flexric-installed.tar.gz -C /
-          sudo ldconfig
-
-      - name: Configure ns-3 
-        working-directory: mmwave-LENA-oran
-        run: ./ns3 configure --disable-python --enable-examples 
-
       - name: Build ns-3 
         working-directory: mmwave-LENA-oran
-        run: ./ns3 build
+        run: |
+          ./ns3 clean
+          ./ns3 configure 
+          ./ns3 build -j$(nproc)
+        
+      - name: Execution and Integration Test
+        shell: bash
+        run: |
+
+          $GITHUB_WORKSPACE/flexric/build/examples/ric/nearRT-RIC > /tmp/ric.log 2>&1 &
+          RIC_PID=$!
+          echo "RIC started (PID: $RIC_PID)"
+
+          cd $GITHUB_WORKSPACE/mmwave-LENA-oran
+          ./ns3 run scratch/scenario-zero.cc > /tmp/ns3.log 2>&1 &
+          NS3_PID=$!
+          echo "ns-3 E2-Node started (PID: $NS3_PID)"
+
+          echo "Waiting for E2 connection setup (20s)..."
+          sleep 20
+
+          kill -0 $RIC_PID 2>/dev/null || { echo "FAIL: RIC died during startup"; tail -n 20 /tmp/ric.log; exit 1; }
+          kill -0 $NS3_PID 2>/dev/null || { echo "FAIL: ns-3 died during startup"; tail -n 20 /tmp/ns3.log; exit 1; }
+
+          echo "Starting xApp..."
+          $GITHUB_WORKSPACE/flexric/build/examples/xApp/c/kpm_rc/xapp_kpm_rc > /tmp/xapp.log 2>&1
+          XAPP_EXIT=$?
+
+          echo "=== RIC log (last 10 lines) ==="
+          tail -n 10 /tmp/ric.log || true
+          echo "=== ns-3 log (last 10 lines) ==="
+          tail -n 10 /tmp/ns3.log || true
+          echo "=== xApp log (last 30 lines) ==="
+          tail -n 30 /tmp/xapp.log || true
+
+          kill $RIC_PID $NS3_PID 2>/dev/null || true
+
+          if [ $XAPP_EXIT -eq 0 ]; then
+            echo "SUCCESS: xApp completed its test run successfully."
+          else
+            echo "FAIL: xApp exited with code $XAPP_EXIT"
+            exit 1
+          fi
