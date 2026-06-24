@@ -29,6 +29,10 @@ The team upgraded the simulator to achieve full compliance with E2AP v1.01, KPM 
 
 This project is a collaborative effort between Orange Innovation Egypt (OIE) and Orange Innovation Poland (OIP), with OIP providing technical contributions and support to the development and enhancement of the platform.
 
+## Documentation
+
+- [Energy Saving rApp Demo Deployment Guide (RIC-TaaP + O1 + ns-3)](docs/energy-saving-rapp-ric-taap-o1-deployment.md)
+
 
 ![alt text](fig/ns-o-ran-flexric.png)
 
