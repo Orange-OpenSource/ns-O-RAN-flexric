@@ -10,7 +10,35 @@ The purpose of this document is to help developers understand what information i
 
 In the next step, this document will demonstrate how to develop a custom xApp by extending the reporting framework to extract and report custom parameters that are not available by default.
 
-> **Note:** in 5G
+To Report a any prameter from any protocol Layer in LENA module to your Custom xApp you should follow the next steps :
+
+1. navigate to `../mmwave-LENA-oran/scratch` and open `orange-rf-kpi-reporting.cc` VS Code .
+   we createthis sceanrio to able the users to enable the reporting flags of any layer that he need to report from
+
+2. go to the object of `NrKpiReportingConfig` caled `kpiCfg` and you will see the reporting flags of each layer and you can choose the sepcific KPI for example
+
+   ```cpp
+   kpiCfg.enablePhyReporting = true;
+   kpiCfg.selectedPhyKpis = {
+       "PHY.DlDataSinr", "PHY.DlCtrlSinr", "PHY.Rsrp", "PHY.Rsrq",
+       // "PHY.Cqi", "PHY.Mcs", "PHY.Ri",
+       // "PHY.RxPacketTbSize", "PHY.Tbler", "PHY.CorruptTb",
+       // "PHY.PrbUtilizationDl", "PHY.ActivityFactor",
+       // "PHY.TxPowerWatts", "PHY.AntennaPortsOn",
+       // "PHY.EnergyConsumptionJ", "PHY.InstantaneousPowerW",
+       // "PHY.SlotDataUsedSym", "PHY.SlotAvailRb", "PHY.SlotCtrlUsedSym",
+   };
+   ```
+
+3. you can now save your edits
+
+4. Navigate to `/path/to/flexric/build/examples/ric/` and then run `./nearRT-RIC`.
+
+5. Navigate to `/path/to/mmwave-LENA-oran` and then run `./ns3 --run scratch/orange-rf-kpi-reporting`
+
+6. Navigate to `/path/to/flexric/build/examples/xApp/c/orange/` and then run `./xapp_kpm_rc`.
+
+in the bellow you can fined the all prameters and its locations that supported in 5G-LEAN
 
 ---
 

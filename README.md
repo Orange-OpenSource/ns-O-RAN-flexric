@@ -171,6 +171,31 @@ This setup leverages a hybrid of open-source tools and Orange’s internal platf
 
 
 
+## 5. LENA Module Reporting Parameters
+
+To support custom xApp development on top of this platform, a dedicated reference document is available that maps every reportable KPI to its exact source in the 5G-LENA NR module:
+
+📄 [`docs/LENA_MODEL_REPORTING_PARAMETERS.md`](docs/LENA_MODEL_REPORTING_PARAMETERS.md)
+
+### What this document provides
+
+- A **complete layer-by-layer catalogue** (PHY, MAC, RLC, PDCP, RRC, E2/O-RAN) of all parameters that can be extracted from the 5G-LENA module (`src/nr/`).
+- A clear **status for each parameter** — whether it is directly **IMPLEMENTABLE** via a trace source or public API, **DERIVABLE** through post-processing, or **NOT_SUPPORTED** in the current codebase.
+- The exact **file, class, function, and TraceSource** needed to access each metric, so you know precisely where to connect your reporting logic.
+- Documented **known corrections** between the simulator implementation and the 3GPP KPM naming conventions (e.g. RLC byte counts reported under PDCP KPM names).
+
+### How it helps you build a custom xApp
+
+When developing a custom xApp that requires specific KPIs from the LENA simulation — such as per-UE throughput, SINR, PRB utilization, PDCP delay, or RRC events — this document tells you:
+
+1. **Whether the parameter is available** in the current 5G-LENA codebase.
+2. **How to enable reporting** of that parameter (trace connection call, helper method, or derivation formula).
+3. **Where the data flows** from the simulator layer through the E2 indication message to your xApp.
+
+This makes the document the starting point for any custom reporting extension, enabling you to identify the required parameters, wire the correct trace sources, and include them in the KPM indication messages sent to FlexRIC.
+
+---
+
 ## 6. Installation Instructions
 
 ### System Requirements
