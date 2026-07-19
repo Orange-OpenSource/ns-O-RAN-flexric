@@ -236,6 +236,9 @@ sudo apt-get install -y \
 # ns-3 dependencies
 sudo apt-get install -y g++ python3 libc6-dev
 
+# nlohmann JSON (required for CCC service model)
+sudo apt-get install -y nlohmann-json3-dev
+
 # Optional: SQLite (for LENA comparison examples)
 sudo apt-get install -y sqlite sqlite3 libsqlite3-dev
 
