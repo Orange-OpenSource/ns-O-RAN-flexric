@@ -19,32 +19,33 @@ The **RIC-TaaP** project aims to provide:
 
 - **AI-based innovation**: Study the possiable benefits for LLM-powered algorithm and Agentic-AI frameworks to enhance the RAN optimization automation and reduce rigid operational nature of the RAN.
 
-## 2. Project Introduction
- 
-RIC Testing as a Platform (RIC-TaaP) is an open-source initiative designed to streamline xApp/rApp functional and operational testing, fostering innovation in xApp/rApp design and providing proven digital-twin networks.
-Recognizing the need for a robust and fully open-source testing ecosystem, Orange Innovation Egypt (OIE) has focused on enabling system-level use cases by integrating leading open-source components. This includes: FlexRIC from EURECOM, the [ns-O-RAN](https://openrangym.com/ran-frameworks/ns-o-ran) simulator, originally developed by the Institute for the Wireless Internet of Things (WIoT) ,University of Padova and Mavenir , [5G-LENA](https://5g-lena.cttc.es/) module, developed by the [OpenSim](https://www.cttc.cat/open-simulations-opensim/) Research Unit at the [Centre Tecnològic de Telecomunicacions de Catalunya (CTTC)](https://www.cttc.cat/) and [Sionna Ray Tracing (RT)](https://nvlabs.github.io/sionna/rt/index.html) developed by Nvidia and translated to ns-3 [here](https://github.com/robpegurri/ns3-rt).
- 
-
-RIC-TaaP extends and integrates five leading open-source components to create a complete O-RAN testing environment. The platform achieves full compliance with the following standards:
-| Standard | Version |
-|----------|:-------:|
-| E2AP | v1.01 |
-| KPM-SM | v3.00 |
-| RC-SM (RAN Control) | v1.03 |
-| CCC-SM | v06.00 |
-
- This advanced platform will facilitate the validation of complex use cases that require a sophisticated LTE/5G simulation environment. Additionally, the team has introduced a user-friendly dashboard, RIC-TaaP Studio the platform with a user-friendly dashboard, RIC-TaaP Studio, enabling intuitive test scenario design and incorporating a range of operational features.The development of a Graphical User Interface (GUI) for ns-3, enabling users to execute and observe simulations in an intuitive and user-friendly manner.
-
-This project is a collaborative effort between Orange Innovation Egypt (OIE) and Orange Innovation Poland (OIP), with OIP providing technical contributions and support to the development and enhancement of the platform.
-
-
-![alt text](fig/release2.png)
-
-## 2. RIC-TaaP promo video
 ![alt text](fig/RIC_TaaP.png)
 
 
 [![Watch the video](fig/5.png)](https://www.youtube.com/watch?v=oN0gBh1E7RE&t)
+
+
+## 2. Project Introduction
+ 
+RIC Testing as a Platform (RIC-TaaP) is an open-source initiative designed to streamline xApp/rApp functional and operational testing, fostering innovation in xApp/rApp design and providing proven digital-twin networks.
+Recognizing the need for a robust and fully open-source testing ecosystem, Orange Innovation Egypt and Poland (OIE& OIP) has focused on enabling system-level use cases by integrating leading open-source components. This includes: FlexRIC from EURECOM, the [ns-O-RAN](https://openrangym.com/ran-frameworks/ns-o-ran) simulator, originally developed by the Institute for the Wireless Internet of Things (WIoT) ,University of Padova and Mavenir , [5G-LENA](https://5g-lena.cttc.es/) module, developed by the [OpenSim](https://www.cttc.cat/open-simulations-opensim/) Research Unit at the [Centre Tecnològic de Telecomunicacions de Catalunya (CTTC)](https://www.cttc.cat/) and [Sionna Ray Tracing (RT)](https://nvlabs.github.io/sionna/rt/index.html) developed by Nvidia and translated to ns-3 [here](https://github.com/robpegurri/ns3-rt).
+ 
+
+RIC-TaaP extends and integrates five leading open-source components to create a complete O-RAN testing environment. The platform achieves full compliance with the following standards:
+
+For Near-RT RIC Control Loop, the platform support E2 Application Protocol (E2AP) along with its Service Models (SMs)
+| Standard | Version |  5G Simulation Environment|
+|----------|:-------:|:-------:|
+| E2AP | v1.01 | ns-3-mmwave / LENA-nr V3.3
+| E2SM-KPM | v3.00 |  ns-3-mmwave / LENA-nr V3.3
+| E2SM-RC  | v1.03 | ns-3-mmwave / LENA-nr V3.3
+| E2SM-CCC | v06.00 |  LENA-nr V3.3
+
+ This advanced platform will facilitate the validation of complex use cases that require a sophisticated LTE/5G simulation environment. Additionally, the team has introduced a user-friendly dashboard, RIC-TaaP Studio the platform with a user-friendly dashboard, RIC-TaaP Studio, enabling intuitive test scenario design and incorporating a range of operational features.The development of a Graphical User Interface (GUI) for ns-3, enabling users to execute and observe simulations in an intuitive and user-friendly manner.
+
+The E2 termination for Ns-3 modules and closed-loop control Architecture of the Near RT-RIC shown below: 
+
+![alt text](fig/release2.png)
 
 ## 3. ns-O-RAN-flexric Code Structure
 
@@ -55,6 +56,7 @@ The ns-O-RAN-flexric is composed by five main components, as shown in the figure
 - The [ns-O-RAN](https://github.com/o-ran-sc/sim-ns3-o-ran-e2) module, developed by Northeastern University and Mavenir, which is basically an external module that can be plugged in ns-3 and uses the e2sim to create a SCTP connection with the RIC.
 - The [5G-LENA NR module](https://gitlab.com/cttc-lena/nr) that covers the SU-MIMO and Enhanced PHY/MAC layer capabilities.
 - The [ns3 version of Sionna RT](https://github.com/robpegurri/ns3-rt) Sionna RT enables highly accurate propagation modeling by leveraging GPU-accelerated ray tracing, making it ideal for simulations in complex environments at any frequency, including urban and vehicular scenarios.
+<!-- 
 
 
 ## 4. Main Updates
@@ -63,11 +65,11 @@ The ns-O-RAN-flexric is composed by five main components, as shown in the figure
 
  1. **E2 Setup request**
  
-        - Edit the RAN Function IDs for **KPM**, **RC**, and **CCC**
+        - Edit the RAN Function IDs for KPM, RC, and CCC
         - Reformat the size of the message to match FlexRIC (62 byte)​
         - Update the KPM description and model to KPMv3 
         - Update the RC description and model to RCv1.03
-        - Add CCC RAN Function description and model (CCC v06.00) — *new*
+        - Add CCC RAN Function description and model (CCC v06.00)
         - Add STYLE_4_RIC_SERVICE_REPORT 
         - Add STYLE_1_RIC_EVENT_TRIGGER
         - Add FORMAT_1_RIC_EVENT_TRIGGER
@@ -85,7 +87,7 @@ The ns-O-RAN-flexric is composed by five main components, as shown in the figure
 
         - Update the message to match KPM v3.0​
         - Fill New RIC indication messages formats (Format 3)​
-        - Add CCC Indication support for reporting antenna port and power state — *new*
+        - Add CCC Indication support for reporting antenna port and power state 
 
 5. **RIC Control Request** ​
    
@@ -95,24 +97,14 @@ The ns-O-RAN-flexric is composed by five main components, as shown in the figure
           - Add Control Action ID 1 (Handover Control) (Section 8.4.4.1)
           - Add Control Action ID 2 (Conditional Handover Control) (Section 8.4.4.2)
           - Add Control Action ID 3 (DAPS Handover Control) (Section 8.4.4.3)        
-          - Add CCC Control Request handling for RAN Configuration Structure Name O-NESPolicy — *new*
+          - Add CCC Control Request handling for RAN Configuration Structure Name O-NESPolicy 
  
 
 6. **RIC Control Acknowledge** ​
-
-        - Implemented from scratch
 7. **RIC Subscription delete request/response**
-      
-      
-        - Implemented from scratch
-
 8. **RIC Subscription modification response**
-
-        - Implemented from scratch
 9. **RIC Subscription modification confirm**
 
-        - Implemented from scratch
-      
 ### 4.2 KPM, RC, and CCC Service Models
 
 1. Update the KPM ASN and model to KPM v3.00
@@ -120,21 +112,21 @@ The ns-O-RAN-flexric is composed by five main components, as shown in the figure
 2. Update the RC ASN and model to RC v1.03
 
 3. **CCC v06.00** *(new)* — Implement the Cell Configuration and Control (CCC) service model from scratch
+-->
 
-## 4.3 Developed xApps
+
+## 4.3 Sample xApps
 
 Two xApps have been developed and validated on the RIC-TaaP platform. Each has a dedicated documentation page covering the concept, operation logic, demo video, and step-by-step instructions for running with or without the GUI.
 
 ---
 
-### 4.3.1 Energy Saving xApp
+### 4.3.1 Cell Switch On/Off Energy Saving xApp
 
 > **O-RAN Use Case 21** — *Carrier and Cell Switch On/Off* (Sub-use Case 4.21.3.1)
 
-The ES xApp monitors per-cell PRB utilization through KPM indication reports and triggers cell switch-on/off decisions via RC control messages — all without human intervention.
-
-📄 **Full documentation:** [`docs/xapp-energy-saving.md`](docs/xapp-energy-saving.md)  
-🎬 **Demo video:** [Watch on YouTube](https://www.youtube.com/watch?v=p5MOp3b8Nm8&t)
+The ES xApp monitors per-cell PRB utilization through KPM indication reports and triggers cell switch-on/off decisions via RC control messages in a closed-loop fashion. For more details [Full documentation](docs/xapp-energy-saving.md)  
+ and [Demo video](https://www.youtube.com/watch?v=p5MOp3b8Nm8&t)
 
 ![Energy Saving Dashboard](fig/energy_saving_with_CU.jpeg)
 
@@ -142,16 +134,33 @@ The ES xApp monitors per-cell PRB utilization through KPM indication reports and
 
 ### 4.3.2 RF Channel Reconfiguration xApp
 
-> **CCC v06.00** — *Cell Configuration and Control*
+> **O-RAN Use Case 21** — *RF Channel Re-configuration* (Sub-use Case 4.21.3.2)
 
-The RF Reconfiguration xApp uses the CCC service model to dynamically adjust the number of active antenna ports and transmission power at the gNB in response to observed network conditions.
-
-📄 **Full documentation:** [`docs/xapp-rf-reconfiguration.md`](docs/xapp-rf-reconfiguration.md)
-
-🎬 **Demo video:** [Watch on YouTube] (https://youtu.be/SzBfufGadeI?si=axxVgaDP5hZGRrst)
+The RF Reconfiguration xApp uses the CCC service model to dynamically adjust the number of active antenna ports and transmission power at the gNB in response to observed network conditions. For more details find the [Full documentation](docs/xapp-rf-reconfiguration.md) and the [Demo video](https://youtu.be/SzBfufGadeI?si=axxVgaDP5hZGRrst).
 ![RF Channel Reconfiguration Dashboard](fig/10.png)
 
 ---
+
+### 4.3.3 Custom your xApps 
+
+A dedicated reference document maps every reportable 76 KPI to its exact source in the 5G-LENA NR module, and provides a step-by-step guide for enabling custom KPI reporting [here](docs/LENA_MODEL_REPORTING_PARAMETERS.md)
+
+**What it provides:**
+- Layer-by-layer KPI catalogue (PHY, MAC, RLC, PDCP, RRC, E2/O-RAN) with implementation status for each parameter.
+- The exact file, class, function, and TraceSource for each metric.
+- Step-by-step guide using `orange-rf-kpi-reporting.cc` to enable any KPI for custom xApp reporting.
+
+## Summary
+
+| Layer | IMPLEMENTABLE | DERIVABLE | NOT_SUPPORTED | Total |
+|-------|:-------------:|:---------:|:-------------:|:-----:|
+| PHY | 24 | 2 | 0 | 26 |
+| MAC | 6 | 2 | 0 | 8 |
+| RLC | 9 | 2 | 0 | 11 |
+| PDCP | 7 | 2 | 0 | 9 |
+| RRC | 14 | 0 | 0 | 14 |
+| E2 / O-RAN | 6 | 2 | 0 | 8 |
+| **Total** | **66** | **10** | **0** | **76** |
 
 ### 4.4 New ns-3 features
 
@@ -164,7 +173,6 @@ The RF Reconfiguration xApp uses the CCC service model to dynamically adjust the
 4. Cell deep-sleep implementation 
 
 5. Dynamic Port Power Realocation
-
 
 6. **New run flags:**
 
@@ -179,7 +187,7 @@ The RF Reconfiguration xApp uses the CCC service model to dynamically adjust the
   --IntersideDistanceCells=(double)
 ```
 
-## 4.5. RIC-TaaP Studio — GUI
+## 4.5 RIC-TaaP Studio — GUI
 
 RIC-TaaP Studio is a web-based interface that makes the platform accessible without requiring deep command-line knowledge. It provides end-to-end control over the simulation and xApp lifecycle.
 
@@ -280,15 +288,15 @@ The prepation of enviroment for running testing examples can be done when 'near-
 
 ### 6.1 FlexRIC Installation Instructions
 
-The ns-O-RAN-flexric project is utilizing the latest stable commit of FlexRIC in the **dev** branch. You **MUST** adhere to the installation and deployment guidelines outlined under commit number [a358954c](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7) before use the simulator.
+ You **MUST** adhere to the installation and deployment guidelines outlined under commit number [?????](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7) before use the simulator.
 
-For the FlexRIC [installation instructions](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7#1-installation), once you reach [section 2.2](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7#22-build-flexric), note that FlexRIC is configured to build the nearRT-RIC with **E2AP v2.03** and **KPM v2.03** by default. However, the ns-O-RAN simulator uses **E2AP v1.01** and **KPM v3.00**. After completing the mentioned installation prerequisites, so you should execute the following commands:
+For the FlexRIC [installation instructions](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7#1-installation), once you reach [section 2.2](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7#22-build-flexric), note that FlexRIC is configured to build the nearRT-RIC with **E2AP v2.03** and **KPM v2.03** by default. However, the ns-O-RAN simulator uses **E2AP v1.01**, **KPM v3.00** and **CCC v6.00** . After completing the mentioned installation prerequisites, so you should execute the following commands:
 
 ```
 git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git && cd flexric
 ```
 ```
-git checkout oie-ric-taap-xapps 
+git checkout ????? 
 ```
 ```
 mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
@@ -408,7 +416,7 @@ pip3 install influxdb
 5. To see current KPIs, click 'Source Data'. 
  If FlexRIC connection is enabled, GUI KPIs will refresh only when xApp is running and Indication messages are exchanged. <br />
  If FlexRIC is disabled in GUI, GUI KPIs will refresh every 1s.
-6. To run  xapp_rc_handover_ctrl on GUI, at first you need to set the ric taap parameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
+6. To run  ??????? on GUI, at first you need to set the ric taap parameters as show in this figure [Click here to view the RIC TaaP Parameters](docs/RicTaap_prameters1.png) then Navigate to '/path/to/flexric/build/examples/xApp/c/ctrl/ ' .and then run './xapp_rc_handover_ctrl' and wait some seconds.  
 7. To stop simulation, click 'Stop' on 'Show Form' window.
 8. To close GUI if not needed, please use command 'docker-compose down' in 'ns-3-mmwave-oran/GUI' folder.
    
@@ -416,7 +424,7 @@ pip3 install influxdb
 
 9. **[Optional Step]** If you would like to observe KPIs from Grafana, which allows to observe past simulations, check the next section.
 
-#### 6.4.2 Scenario Zero
+#### 6.4.2 mmWave Scenarios 
 
 Scenario Zero features a Non-StandAlone (NSA) 5G setup consisting of one LTE eNB and four gNBs. One gNB is co-located with the LTE eNB at the center, while the remaining three are positioned at an inter-site distance of 1000 meters from the center. To run the scenario, follow these steps:
 
@@ -450,16 +458,35 @@ Scenario Zero features a Non-StandAlone (NSA) 5G setup consisting of one LTE eNB
 5. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc' and then run './xapp_kpm_rc'.
 And if everything goes as intended we should be able to see in order the following messages as shown in the Wireshark snapshot [here](https://youtu.be/xD4TbgZ74wY)
 
-## 6.4.3 LENA Module Reporting Parameters
+## 6.4.3 5G-LENA Module Scenarios
 
-A dedicated reference document maps every reportable KPI to its exact source in the 5G-LENA NR module, and provides a step-by-step guide for enabling custom KPI reporting:
+To Report a any prameter from any protocol Layer in LENA module to your Custom xApp you should follow the next steps :
 
-📄 [`docs/LENA_MODEL_REPORTING_PARAMETERS.md`](docs/LENA_MODEL_REPORTING_PARAMETERS.md)
+1. navigate to `../mmwave-LENA-oran/scratch` and open `orange-rf-kpi-reporting.cc` VS Code .
+   we createthis sceanrio to able the users to enable the reporting flags of any layer that he need to report from
 
-**What it provides:**
-- Layer-by-layer KPI catalogue (PHY, MAC, RLC, PDCP, RRC, E2/O-RAN) with implementation status for each parameter.
-- The exact file, class, function, and TraceSource for each metric.
-- Step-by-step guide using `orange-rf-kpi-reporting.cc` to enable any KPI for custom xApp reporting.
+2. go to the object of `NrKpiReportingConfig` caled `kpiCfg` and you will see the reporting flags of each layer and you can choose the sepcific KPI for example
+
+   ```cpp
+   kpiCfg.enablePhyReporting = true;
+   kpiCfg.selectedPhyKpis = {
+       "PHY.DlDataSinr", "PHY.DlCtrlSinr", "PHY.Rsrp", "PHY.Rsrq",
+       // "PHY.Cqi", "PHY.Mcs", "PHY.Ri",
+       // "PHY.RxPacketTbSize", "PHY.Tbler", "PHY.CorruptTb",
+       // "PHY.PrbUtilizationDl", "PHY.ActivityFactor",
+       // "PHY.TxPowerWatts", "PHY.AntennaPortsOn",
+       // "PHY.EnergyConsumptionJ", "PHY.InstantaneousPowerW",
+       // "PHY.SlotDataUsedSym", "PHY.SlotAvailRb", "PHY.SlotCtrlUsedSym",
+   };
+   ```
+
+3. you can now save your edits
+
+4. Navigate to `/path/to/flexric/build/examples/ric/` and then run `./nearRT-RIC`.
+
+5. Navigate to `/path/to/mmwave-LENA-oran` and then run `./ns3 run scratch/orange-rf-kpi-reporting`
+
+6. Navigate to `/path/to/flexric/build/examples/xApp/c/orange/` and then run `./xapp_kpm_rc_Enhanced`.
 
 ---
 ### 6.4.4 Observe KPIs with Grafana

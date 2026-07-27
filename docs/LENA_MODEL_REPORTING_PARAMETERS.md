@@ -34,9 +34,9 @@ To Report a any prameter from any protocol Layer in LENA module to your Custom x
 
 4. Navigate to `/path/to/flexric/build/examples/ric/` and then run `./nearRT-RIC`.
 
-5. Navigate to `/path/to/mmwave-LENA-oran` and then run `./ns3 --run scratch/orange-rf-kpi-reporting`
+5. Navigate to `/path/to/mmwave-LENA-oran` and then run `./ns3 run scratch/orange-rf-kpi-reporting`
 
-6. Navigate to `/path/to/flexric/build/examples/xApp/c/orange/` and then run `./xapp_kpm_rc`.
+6. Navigate to `/path/to/flexric/build/examples/xApp/c/orange/` and then run `./xapp_kpm_rc_Enhanced`.
 
 in the bellow you can fined the all prameters and its locations that supported in 5G-LEAN
 
