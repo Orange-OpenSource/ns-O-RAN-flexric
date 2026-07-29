@@ -124,9 +124,24 @@ The Figure below describes the contribution of OIE over ns-O-RAN project.
 
 ![ns-O-RAN](fig/9.png)
 
+### 4.4 Energy Saving rApp use case
 
+In addition to the near-RT ES xApp described in Section 4.3, RIC-TaaP also supports an **Energy Saving rApp** use case, running on the O-RAN SMO / non-RT RIC platform. The rApp monitors RAN cell load using PM (Performance Management) data, generates traffic-behavior predictions, and applies energy-saving control actions (cell switch on/off) over the O1 interface (NETCONF).
 
-### 4.4 New ns-3 features
+**Loading PM data**
+
+It is important to use a **CSV file** to load the network PM data. This CSV file is the data source used to start generating predictions on traffic behavior, and those predictions are what drive the energy-saving decision logic — so the CSV must be correctly supplied before the rApp can produce meaningful energy-saving actions.
+
+**Prediction paths**
+
+Two paths are supported to obtain the traffic predictions that feed the energy-saving decision:
+
+1. **KServe inference service**: the PM data is used to run inference through **KServe** against a trained **LSTM** model, and the resulting predictions are used directly to make the energy-saving decision.
+2. **MLOps pipeline**: the PM data is sent to an **MLOps server** hosting the AI/ML framework platform. This platform runs the complete cycle — training the model, processing the data, and generating predictions — and then uploads the predictions to an **Nginx server**, from which the rApp can easily fetch them in order to take the suitable energy-saving actions.
+
+For the full deployment tutorial — SMO installation, rApp packaging/onboarding via the rApp Manager, and the end-to-end loop test with the O1 server and ns-3 — see the [Energy Saving rApp Demo](https://github.com/Orange-OpenSource/ns-O-RAN-flexric/blob/ES_rApp_test/docs/energy-saving-rapp-ric-taap-o1-deployment.md) guide.
+
+### 4.5 New ns-3 features
 
 1. '--E2andLogging=(bool)' allows to trace KPIs do file and E2 term in the same time, every "Indication period" KPIs are sent to E2 termination (RIC) and saved to files (CU-CP, CU-UP, DU)
    
@@ -148,7 +163,7 @@ The Figure below describes the contribution of OIE over ns-O-RAN project.
   --IntersideDistanceCells=(double)
 ```
 
-### 4.5 Graphical User Interface (GUI) for ns3
+### 4.6 Graphical User Interface (GUI) for ns3
 
 1. Observe Cell/UEs KPIs
 3. Run/Stop simulation from GUI with selection of simulation parameters
@@ -157,7 +172,7 @@ The Figure below describes the contribution of OIE over ns-O-RAN project.
 7. A1 Policy Managment Dashboard (Set and Get for A1 Policies)
 9. Grafana platform deployed to observe simulation results
 
-### 4.6 Digital Twin Setup 
+### 4.7 Digital Twin Setup 
 
 This setup leverages a hybrid of open-source tools and Orange’s internal platforms, such as C-SON, to recreate operational environments with high accuracy. The simulation environment will support automated testing of RAN algorithms, enabling performance comparison through Cumulative Distribution Functions (CDFs), and driving innovation through safe and rapid experimentation. 
 
@@ -437,7 +452,16 @@ To run kpm-rc xApp with 5G-LENA module
 5. Navigate to '/path/to/flexric/build/examples/xApp/c/kpm_rc ' and then run './xapp_kpm_rc'.
 6. To enable running xApp triggering from GUI, please copy two scripts from '/path/to/mmwave-LENA-oran/GUI/FlexRIC xApp GUI trigger' to '/path/to/flexric" and then type "python3 xApp_trigger.py"
 
-#### 6.4.6 Observe KPIs with Grafana
+#### 6.4.6 Energy Saving rApp operation
+
+The Energy Saving rApp use case described in Section 4.4 can be run end-to-end together with the ns-3 simulator via the O1 interface:
+
+1. First, load the network PM data into InfluxDB using the CSV file, as this is what drives the traffic predictions used by the rApp.
+2. Choose one of the two prediction paths from Section 4.4: either the KServe LSTM inference service, or the MLOps pipeline that publishes predictions to the Nginx server.
+3. Start the O1 server, then run the ns-3 scenario, then deploy the rApp — in that order.
+4. Follow the full step-by-step guide, including SMO installation, rApp onboarding via the rApp Manager, and the O1/ns-3 end-to-end loop test, in the [Energy Saving rApp Demo](rapp-energy-saving/README.md).
+
+#### 6.4.7 Observe KPIs with Grafana
 1. Grafana is being deployed together with GUI through Docker Compose.<br />
 2. It can be accessed by typing 127.0.0.1:3000 or 'NS3_HOST':3000 in the browser. <br />
 3. Default user/password: admin/admin
@@ -475,21 +499,3 @@ To run kpm-rc xApp with 5G-LENA module
 
 ## 9. Liscence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.txt)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
