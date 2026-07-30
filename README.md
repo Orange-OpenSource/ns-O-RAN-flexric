@@ -257,18 +257,24 @@ Environment preparation for running test examples happens once the near-RT RIC i
 
 ### 8.1 FlexRIC Installation Instructions
 
-You **must** follow the installation and deployment guidelines from the [FlexRIC `oie-ric-taap-xapps` branch](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7) before using the simulator.
-
-Follow the [FlexRIC installation instructions](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7#1-installation). Once you reach [section 2.2](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/a358954c12dd009538473dd16554fa62b8835db7#22-build-flexric), note that FlexRIC is configured by default to build the near-RT RIC with **E2AP v2.03** and **KPM v2.03**. The ns-O-RAN simulator instead uses **E2AP v1.01**, **KPM v3.00**, and **CCC v6.00**.
+Follow the [FlexRIC installation instructions](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/f56d4487507c7ace392f1ec3f598e7eeda670acc#1-installation). Once you reach [section 2.2](https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/f56d4487507c7ace392f1ec3f598e7eeda670acc#22-build-flexric), note that FlexRIC is configured by default to build the near-RT RIC with **E2AP v2.03** and **KPM v2.03**. The ns-O-RAN simulator instead uses **E2AP v1.01**, **KPM v3.00**, and **CCC v6.00**.
 
 After completing the prerequisites above, run:
 
 ```bash
-git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git && cd flexric
-git checkout oie-ric-taap-xapps
-mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
+git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git && 
+cd flexric
 ```
 
+Now checkout a stable commit on the **oie-ric-taap-xapps** branch:
+```bash
+git checkout f56d4487507c7ace392f1ec3f598e7eeda670acc
+
+```
+
+```bash
+mkdir build && cd build && cmake .. -DE2AP_VERSION=E2AP_V1 -DKPM_VERSION=KPM_V3_00 && make -j8
+```
 Finally, install the Service Models (SM) on your machine:
 
 ```bash
